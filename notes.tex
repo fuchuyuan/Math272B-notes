@@ -1,0 +1,119 @@
+%
+\documentclass[12pt]{article}
+% geometry
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,letterpaper]{geometry}
+\usepackage{listings}
+%\usepackage{algorithm,algorithmic}
+\usepackage{amssymb,amsmath}
+\usepackage{url}
+\usepackage[lined,ruled,linesnumbered]{algorithm2e}
+\lstset{language=Python}          % Set your language (you can change the language for each code-block optionally)
+
+\usepackage[usenames]{color}
+\usepackage[color,final]{showkeys}
+\definecolor{refkey}{gray}{0.8}
+\definecolor{labelkey}{gray}{0.8}
+
+\usepackage[normalem]{ulem}
+\newcommand{\remove}[1]{{\color{Gray}\sout{#1}}}
+\newcommand{\comm}[1]{{\color{red}(#1)}}
+\newcommand{\revise}[1]{{\color{blue}#1}}
+
+
+\usepackage[utf8]{inputenc}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+
+\newcommand{\xx}{{\bf x}}  
+\newcommand{\bb}{{\bf b}} 
+\newcommand{\cc}{{\mathbb C}} 
+\newcommand{\uu}{{\bf u}} 
+\newcommand{\FF}{{\bf F}} 
+
+
+\newcommand{\RR}{{\mathbb R}}  
+\newcommand{\EE}{{\mathbb E}}  
+
+\newcommand{\Var}{\text{Var}}  
+\newcommand{\std}{\text{std}}  
+
+\newcommand{\lambdat}{{\bf \lambda}}
+\newcommand{\mx}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+
+\begin{document}
+
+\title{Math 272A Spring 2017}
+\author{Chuyuan Fu}
+\date{}
+
+\maketitle
+
+\section{What is a continuum?}
+
+The quantities that we are interested in, for example displacement, velocity, pressure, stress... can be written as fields.
+For example, we can define a displacement field $\uu(\xx, t) : \RR^3\times \RR \rightarrow \RR^3$, which tells us how the matter in a body is displaced when forces are applied. At each point $(\xx,t)$, $\uu$ gives the average displacement of all molecules contained in a small box that is centered at $\xx$.
+
+Specifically, we assume the existence of a length scale $l$ such that if we average over the displacements of all atoms in a box of size $l$, we get a well-defined average.
+
+Imagine we are interested in a quantity $f$. Each molecule has its own value of $f_i$. Lets assume that the $f_i$'s are fluactuating but have the same mean
+\[
+f_i = \bar f + f_i'
+\]
+where $\EE f_i'$=0.
+Assume Poisson fluctuations $\std(f_i') = \bar f$.
+Then our estimator of $\bar f $ is 
+\[
+\hat f  = \frac 1 N \sum_i f_i
+\]
+\begin{align*}
+\Var (\hat f)  &=  \Var(\sum_i  \frac 1 N f_i' )\\
+		&= \frac {1}{ N^2} \sum_i \Var f_i' \\
+		&= \frac {1}{ N^2} N \bar f =\frac{\bar f}{N}
+\end{align*}
+\[
+\std(\hat f ) = \frac{\bar f }{\sqrt{N}}.
+\]
+Relative error is
+\[ 
+\frac{\std(\hat f )}{\bar f} = \frac{1}{\sqrt N}
+\]
+Practically, if I want 0.001 relative error, $N = 10^6$, so I want 100 molecules per side of the box, i.e. need $l \approx 100\times d  = 10$ nm, where d is a molecule diameter, $d = 10^{-10}$m. 
+Many of the objects we want to study are larger than this, e.g. in a microfluid device, channel diameter is $10\times 10^{-6} $ m, cell diameter is $10^{-6}$ - $10^{-5}$ m, cell membrane thickness is 10 - 30 nm, carbon nanotube diameter 2 - 200 nm.
+
+In all of the calculus arguments that follow, we will be taking limits, e.g taking a small volume, $\delta V$ and letting $\delta V \rightarrow 0$. In fact, we assume  $\delta V \rightarrow 0$ but $\delta V > l^3$.
+
+\section{Principles of Linear Elasticity}
+Assume we have a body to which a discrete set of estimated forces $\{\FF_i\}$ is applied under the constraints
+\begin{align*}
+&\sum_i \FF_i = 0 \\
+&\sum_i \xx_i\times \FF_i = 0 \text{ ( independent of choice of origin)}
+\end{align*}
+
+Hooke's 3 laws for linear elasticity
+\begin{itemize}
+\item If no forces are applied to the body ($\FF_i = 0$), the body has a unique rest state.
+we can measure displacements relative to this state.
+\item If we are interested in the displacement $\uu$ at a particular point $\uu(P)$ ther exists a set of coeffcicient matrices $\cc_i(P)$ such that  $\uu(P) = \sum_i \cc_i(P) \cdot \FF_i$
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
