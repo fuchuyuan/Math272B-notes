@@ -48,6 +48,7 @@
 
 \newcommand{\lambdat}{{\bf \lambda}}
 \newcommand{\mx}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\dx}[1]{\text{ d\,}#1}
 
 
 \begin{document}
@@ -105,6 +106,91 @@ Hooke's 3 laws for linear elasticity
 we can measure displacements relative to this state.
 \item If we are interested in the displacement $\uu$ at a particular point $\uu(P)$ ther exists a set of coeffcicient matrices $\cc_i(P)$ such that  $\uu(P) = \sum_i \cc_i(P) \cdot \FF_i$
 \end{itemize}
+
+
+Because of Hooke's 2nd hypothesis, displacements are linear in forces in the sense that 
+\begin{itemize}
+\item if $\{\FF_i\}$ is a set of forces and $\uu(P)$ is the corresponding displacement, then: 
+If we instead consider the set of forces $\{\lambda \FF_i\}$ then the displacement will be $\lambda \uu(P)$
+
+\item If $\FF_i$ is a force and $\uu(P)$ is the corresponding displacement, $\FF_i'$ another force and $\uu'(P)$ its corresponding displacement, then if we apply $\FF_i + \FF_i'$ the displacement will be $\uu(P) +\uu'(P)$ 
+\end{itemize}
+
+Consider the case where the direction of the force at $i$ is set in advance; then the force at $i$ is given by a scalar $F_i$. If w want to have the freedom to change the direction of the forces, then we can create 3 pts $i$, $i+1$, $i+2$ that all lie in the same point in the body and in which the directions of $F_i$, $F_{i+1}$, $F_{i+2}$ are a 3D basis. Suppose also that I am interested in the displacements only the points indexed by $i$, and only in this direction of the forces at $i$
+
+then Hooke's first and second hypothesis tells us that the displacements $\{u_i\}$
+and forces $F_i$ are related by
+\[
+u_i
+\sum_i c_{ij}F_j
+\]
+for some set of coeefcients $c_{ij} $ or equiv
+\[
+\uu = \cc\cdot\FF
+\]
+where $\uu = (u_1, u_2 ... u_N)$, $\cc$ is a $N\times N$ matrix of coefficients, $c_{ij}$ are called the influence coefficients.
+
+We would like to calculate the work done by the forces $\{F_i\}$ in deforming the body. Recall if a force $\FF$ acts on a body and moves the body a distance $\uu$ then the work done is 
+\[
+\FF\cdot\uu
+\]
+we want to calculate the total work done by the forces $\{F_i\}$ in creating displacements $\{u_i\}$ is NOT $\sum_i F_i u_i$.
+
+Imagine that I build up the forces $\{F_i\}$ starting with all $F_i=0$ and keeping all proportions $F_i/F_j$ constant.
+If $\{F_i^*\}$ is the target force, I build up $F_i(t)$ over time by 
+\[
+F_i(t) = F_i^*t.
+\]
+Similarly if the end displacements are $u_i^*$ then $u_i(t)$ builds up over time by 
+\[
+u_i(t) = u_i^*t = \sum_j c_{ij} F_j^*t
+\]
+When displacements increase from $u_i$ to $u_i+\delta u_i$, where $\delta u_i= \sum_j c_{ij} F_j^*\delta t$, work done is 
+\begin{align*}
+\sum_i F_i \delta u_i &= \sum_{i,j} F_ic_{ij}F_j^*\delta t\\
+	&= \sum_{i,j} F_i^*tc_{ij}F_j^*\delta t\\
+	&= \sum_{i,j} c_{ij}F_i^*F_j^*t\delta t
+\end{align*}
+
+Total work done is 
+\begin{align*}
+U &= \sum_{i,j} c_{ij}F_i^*F_j^*t\int_0^1 t \dx{t}\\
+	&=\frac 1 2 \sum_{i,j} c_{ij}F_i^*F_j^*\\
+	&=\frac 1 2 \sum_i F_i^* u_i^*
+\end{align*}
+
+Hypothesis 3
+The total work done in deforming the body should be 
+\begin{itemize}
+\item Positive unless $F_i=0, \forall i$.
+\item Independent of the way in which the forces build up from 0 to $\{F_i\}$
+\end{itemize}
+
+The first part implies that $\cc$ is a positive definite matrix.
+The second part implies the following:
+I want $U(\FF^*)$ to be independent of the path going from 0 to $\FF^*$. Work done in traversing the path is
+\begin{align*}
+U = \int_{path} \sum_iF_i\delta u_i\\
+	=  \int_{path} \sum_{i,j} F_i c_{ij}\delta F_j\
+\end{align*} 
+i.e. I need the above to be an exact differential. An exact differential is a quantity of the form 
+\[
+\sum\frac{\partial f}{\partial x_i} \dx{x_i}
+\]
+A quantity $\sum_i p_i(\xx) \dx{x_i}$ is an exact differential if and only if 
+\[
+\frac{\partial p_i}{\partial x_j} = \frac{\partial p_j}{\partial x_i}.
+\]
+
+
+
+
+
+
+
+
+
+
 
 
 
