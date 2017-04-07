@@ -35,13 +35,17 @@
 
 \newcommand{\xx}{{\bf x}}  
 \newcommand{\bb}{{\bf b}} 
-\newcommand{\cc}{{\mathbb C}} 
 \newcommand{\uu}{{\bf u}} 
 \newcommand{\FF}{{\bf F}} 
 
+\newcommand{\kk}{{\underline{\underline{k}}}} 
+\newcommand{\cc}{{\underline{\underline c}}} 
 
 \newcommand{\RR}{{\mathbb R}}  
 \newcommand{\EE}{{\mathbb E}}  
+
+\newcommand{\GG}{{\mathcal G}}  
+\newcommand{\LL}{{\mathcal L}} 
 
 \newcommand{\Var}{\text{Var}}  
 \newcommand{\std}{\text{std}}  
@@ -181,14 +185,64 @@ A quantity $\sum_i p_i(\xx) \dx{x_i}$ is an exact differential if and only if
 \[
 \frac{\partial p_i}{\partial x_j} = \frac{\partial p_j}{\partial x_i}.
 \]
+This means that 
+\[
+\frac{\partial F_kc_{ki}}{\partial F_j} = \frac{\partial F_kc_{kj}}{\partial F_i} 
+\]
+\[c_{ji} = c_{ij}\]
+$\cc$ is symmetric.
 
+This means that if we apply a point force a point $i$ and measure displacement at $j$, we get the same displacement as if we apply the force at $j$ and measure displacement at $i$.
+$\cc = \cc^T$ is known as Maxwell-reciprocity. This is analogous to self-adjointness of ODEs/PDEs. e.g. if I have an ODE
+\[
+\LL[y] = f(x)
+\]
+I can construct a Green's function solution
+\[
+\LL_x[\GG(x,\tilde x )] = \delta(x-\tilde x )
+\]
+If $\LL$ is a self-adjoint operator then 
+\[
+\GG(x, \tilde x) = \GG(\tilde x, x).
+\]
+The PDEs for linear elasticity theory are self-adjoint.
 
-
-
-
-
-
-
+\begin{enumerate}
+\item
+Suppose we load (i.e. apply a set of forces) to an elastic body doing an amount of work $U = \frac 1 2 \sum_{i,j}c_{ij}F_iF_j$.
+Now we take the forces away; in remaining the forces, we must do work $-U$ i.e. the forces within the body do work $U$. we can think of $U$ as the {\bf internal elastic energy} within a deformed body.
+ 
+ \item {Lorentzian or Betti-Rayleigh reciprocity.}
+ Consider the same body deformed under two different set of forces $\{F_i\}, \{F_i'\}$with reps displacements $\{u_i\}, \{u_i'\}$. Index notation below
+ \[
+F_i'u_i = F_i' c_{ij}F_j =  F_i' c_{ji}F_j = F_i c_{ij}F_j' = F_i u_i' 
+ \]
+ This is known to a bunch of Harvard people (including Roper) as {\bf something for nothing formula}.
+ 
+ \item {Uniqueness.} Using $\cc$ I can calculate $\{u_i\}$ from $\{F_i\}$ using $\uu  = \cc\cdot\FF$
+ I can similarly calculate $\FF$ (uniquely) from $\uu$ as 
+ \[
+\FF = \kk\cdot \uu
+ \]
+ where $\kk= \cc^{-1}$ and $\cc$ is invertible because it is (by Hooke's first law).
+ $\kk$ is called the matrix of spring constants.
+ \[
+ U= \frac 1 2 \sum_i F_i u_i = \frac 1 2 \sum_{ij} k_{ij}u_iu_j
+ \]
+ 
+ 
+ \item Principle of virtual work.
+ \[
+\frac{\partial U}{\partial u_i} = \sum_j k_{ij}u_j = F_i
+ \]
+ Take a stressed and already deformed body; and imagine applying additional virtual displacements $\{\delta u_i\}$ to the body. The external forces $F_i$ do ``virtual work": external virtual work (EVW) $ \sum_i F_i\delta u_i$.
+ 
+ I also change the elastic (internal) energy of the body by 
+ \[
+\delta U = \sum_i \frac{\partial U}{\partial u_i} \delta u_i
+ \]
+ also known as "internal virtual work" (IVW). The idea IVW = EVW is key to Finite Element Models for linear elasticity. The principle of virtual work is often assumed and can be used to solve problems with {\bf large deformations}, membranes, etc.
+\end{enumerate}
 
 
 
