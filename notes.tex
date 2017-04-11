@@ -35,6 +35,7 @@
 
 \newcommand{\xx}{{\bf x}}  
 \newcommand{\bb}{{\bf b}} 
+\newcommand{\ee}{{\bf e}} 
 \newcommand{\uu}{{\bf u}} 
 \newcommand{\FF}{{\bf F}} 
 
@@ -46,6 +47,8 @@
 
 \newcommand{\GG}{{\mathcal G}}  
 \newcommand{\LL}{{\mathcal L}} 
+\newcommand{\UU}{{\mathcal U}} 
+\newcommand{\cF}{{\mathcal F}} 
 
 \newcommand{\Var}{\text{Var}}  
 \newcommand{\std}{\text{std}}  
@@ -243,6 +246,65 @@ F_i'u_i = F_i' c_{ij}F_j =  F_i' c_{ji}F_j = F_i c_{ij}F_j' = F_i u_i'
  \]
  also known as "internal virtual work" (IVW). The idea IVW = EVW is key to Finite Element Models for linear elasticity. The principle of virtual work is often assumed and can be used to solve problems with {\bf large deformations}, membranes, etc.
 \end{enumerate}
+
+\bigskip
+\bigskip
+Often our b.c.s may consist of a combination of known forces and known displacements. A loaded bridge has $\uu=0$ at points of support. Is he displacement field unique when we use mixed b.c.s.?
+
+Assume we have two set of b.c.s. $\cF$ where $F_i$ is know, $\UU$ where $u_i$ is known, $\cF$ and $\UU$ disjoint.
+
+Can we specify a set of forces $F_i^*$ such that 
+\[
+F_i^*  = F_i \quad  \forall i\in \cF
+\]
+\[
+\sum_jc_{ij}F_j^*  = u_i \quad \forall i\in \UU
+\]
+
+We need to solve $|\UU|$ equqtions to calculate $|\UU|$ unknown $F_i^*$
+\[
+\sum_{j\in \UU} c_{ij}F_j^* = u_i - \sum_{j\in\cF} c_{ij}F_j^*
+\]
+
+Because $\cc$ is positive deinite, all of its principal minors are positive. We can order the indices $i$ so that the first $|\UU|$ indices are associated with $\UU$ and the remaining indices with $\cF$.
+Because $[\cc]\in\UU\times\UU$ has positive determinant, the above equation can be uniquely solved.
+
+Method for finding approximate (even exact) solutions to equations.
+Call a set of forces $\{F_i^*\}$ admissible if $\{F_i^*\} = F_i$ $\forall i\in\cF$.
+Claim: the unique admissible solution of minimized the complementary energy
+\[
+V(F_i^*) = U(F_i^*) - \sum_{i\in\UU} F_i^*u_i
+\]
+(this is a Legendre transform.)
+
+To minimized $V$ we need $\frac{\partial V}{\partial F_i^*}=0$ $\forall i\in\UU$:
+\[
+\sum_jc_{ij}F_j^* - u_i=0 \quad \forall i\in\UU.
+\]
+Still need to show that $\{F_i^*\}$ is a global minimizer. To do this we show that $V\to \infty$ in all directions.
+By positive definiteness of $\cc$, 
+\[
+\sum_{ij} c_{ij}  F_i^* F_j^* \geq \lambda_{\min}\|\FF\|^2,
+\]
+whereas
+\[
+|\sum_{i\in\UU}u_iF_i^*| \leq u_{\max} \|\FF\|.
+\]
+So $V\to\infty$ as $\|\FF\|\to\infty$.
+
+This is known as Principle minimum complementary energy.
+
+We can instead write down our problem in elasticity theory. 
+We specify $u_i$, $i\in\UU$, and we want to solve for  $u_i$, $i\in\cF$. There will be unique $u_i$, $i\in\cF$ satisfying all equations; and if we define admissible displacements $u_i^*$ such that  $u_i^* = u_i$ $\forall i\in\UU$ and $u_i^*$ unconstrained $\forall i\in\cF$ and the unique solution to the problem minimizes 
+\[
+V(u_i^*) = U(F_i^*) - \sum_{i\in\cF} F_i^*u_i
+\]
+
+\section{Tensors}
+\[
+l_{ij} = \ee_i'\cdot\ee_j
+\]
+defines a rotation matrix.
 
 
 
