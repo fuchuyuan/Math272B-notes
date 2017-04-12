@@ -33,11 +33,18 @@
 \definecolor{deepgreen}{rgb}{0,0.5,0}
 
 
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
 \newcommand{\xx}{{\bf x}}  
 \newcommand{\bb}{{\bf b}} 
 \newcommand{\ee}{{\bf e}} 
 \newcommand{\uu}{{\bf u}} 
 \newcommand{\FF}{{\bf F}} 
+\newcommand{\bA}{{\bf A}} 
+
+\newcommand{\bnabla}{{\bf \nabla}} 
 
 \newcommand{\kk}{{\underline{\underline{k}}}} 
 \newcommand{\cc}{{\underline{\underline c}}} 
@@ -292,7 +299,7 @@ whereas
 \]
 So $V\to\infty$ as $\|\FF\|\to\infty$.
 
-This is known as Principle minimum complementary energy.
+This is known as Principle of minimum complementary energy.
 
 We can instead write down our problem in elasticity theory. 
 We specify $u_i$, $i\in\UU$, and we want to solve for  $u_i$, $i\in\cF$. There will be unique $u_i$, $i\in\cF$ satisfying all equations; and if we define admissible displacements $u_i^*$ such that  $u_i^* = u_i$ $\forall i\in\UU$ and $u_i^*$ unconstrained $\forall i\in\cF$ and the unique solution to the problem minimizes 
@@ -301,10 +308,112 @@ V(u_i^*) = U(F_i^*) - \sum_{i\in\cF} F_i^*u_i
 \]
 
 \section{Tensors}
+\subsection{Cartesian tensors and vector calculus \& summation convention}
+ Components of vectors are related via transformation/rotation matrices.
 \[
-l_{ij} = \ee_i'\cdot\ee_j
+l_{ij} = \ee_i'\cdot\ee_j.
 \]
-defines a rotation matrix.
+If we have a vector $\FF$ whose components are $F_i$ in the ``old" coordinate system,
+\[
+\FF = F_i\ee_i
+\]
+using summation convention. The components of $\FF$ in the new coordinate system are
+\[
+\FF = F_i'\ee_i',
+\]
+where 
+\[
+F_i' = \FF\cdot\ee_i'= F_j\ee_j\cdot\ee_i'
+\]
+\begin{equation}\label{eq:3.1}
+F_i' = l_{ij} F_j.
+\end{equation}
+A vector in $\RR^3$ is a set of 3 quantities $\FF = \mx{F_1\\F_2\\F_3}$ that when the coordinate system is changed, transforms according to \ref{eq:3.1}. Examples include forces, velocotiy, displacements, position, torque.
+
+we will define a rank $n$ tensor $\underline{\underset{\vdots}{\underline\bA}}$ ( underlined $n$ times) that is made up of $3^n$ components in $\RR$, $A_{i_1, i_2, \dots,  i_n}$. When we transform coordinates, these components will transform in a way that generalize \ref{eq:3.1}:
+\[
+A_{i_1, i_2\dotsi_n} = l_{i_1j_1} l_{i_2j_2} \cdots l_{i_nj_n}A_{j_1, j_2\dots j_n}.
+\]
+e.g. 
+
+$n=0$, $A$ is s scalar. e.g., temperature, pressure, energy.
+
+$n=1$ $\underline A$ is a vector that transforms by matrix multiply.
+
+$n=2$ $\underline{\underline A}$ is an array of 9 numbers that transforms by 
+\[
+A' = LAL^T, \quad L = (l_{ij}),
+\]
+\[
+A' = l_{ik} l_{jm} A_{km} =  l_{ik} A_{km} (l^T)_{mj} 
+\]
+where $A$ is an old set of 9 numbers, $A'$ is the new set of 9 numbers. e.g. include: stress, strain (or rate of strain).
+
+\begin{theorem} (see Landau \& Lifschitz)
+Define a {\bf isotropic} tensor to be a tensor $\underline{\underline A}$ whose coordinate components are independent of the {\bf allowed} choice of coordinate system.
+\end{theorem}
+In $\RR^3$,
+
+$n=0$, all scalars are isotropic.
+
+$n=1$, $\bf 0$ is the only isotropic vector.
+
+$n=2$, the only isotropic tensors have components, 
+\[
+A_{ij} = \lambda \delta_{ij}.
+\]
+
+$n=3$, only isotropic tensor is the alternating tensor
+\[
+\lambda\epsilon_{ijk}.
+\]
+
+$n=4$, $\lambda\delta_{ij}\delta_{kl}$,  $\mu\delta_{ik}\delta_{jl}$,  $\nu\delta_{il}\delta_{jk}$ and linear combinations thereof.
+
+\bigskip
+\bigskip
+
+{\bf Important identity}
+\[
+\epsilon_{ijk}\epsilon_{ilm} = \delta_{jl}\delta_{km} - \delta_{jm}\delta_{kl}.
+\]
+
+Using summation convenction to evaluation some vector calculus quantities.
+\[
+\bnabla(\frac{\xx}{r}), \text{ where } r = \sqrt{x^2 + y^2 + z^2}.
+\]
+\[
+[\bnabla(\frac{\xx}{r})]_{ij}= \frac{\partial}{\partial x_i}\frac{x_j}{r} = \frac{\delta_{ij}}{r} - \frac{x_ix_j}{r^3}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
