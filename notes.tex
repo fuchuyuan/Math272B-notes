@@ -80,7 +80,7 @@ For example, we can define a displacement field $\uu(\xx, t) : \RR^3\times \RR \
 
 Specifically, we assume the existence of a length scale $l$ such that if we average over the displacements of all atoms in a box of size $l$, we get a well-defined average.
 
-Imagine we are interested in a quantity $f$. Each molecule has its own value of $f_i$. Lets assume that the $f_i$'s are fluactuating but have the same mean
+Imagine we are interested in a quantity $f$. Each molecule has its own value of $f_i$. Lets assume that the $f_i$'s are fluctuating but have the same mean
 \[
 f_i = \bar f + f_i'
 \]
@@ -118,7 +118,7 @@ Hooke's 3 laws for linear elasticity
 \begin{itemize}
 \item If no forces are applied to the body ($\FF_i = 0$), the body has a unique rest state.
 we can measure displacements relative to this state.
-\item If we are interested in the displacement $\uu$ at a particular point $\uu(P)$ ther exists a set of coeffcicient matrices $\cc_i(P)$ such that  $\uu(P) = \sum_i \cc_i(P) \cdot \FF_i$
+\item If we are interested in the displacement $\uu$ at a particular point $\uu(P)$ there exists a set of coefficient matrices $\cc_i(P)$ such that  $\uu(P) = \sum_i \cc_i(P) \cdot \FF_i$
 \end{itemize}
 
 
@@ -138,7 +138,7 @@ and forces $F_i$ are related by
 u_i
 \sum_i c_{ij}F_j
 \]
-for some set of coeefcients $c_{ij} $ or equiv
+for some set of coefficients $c_{ij} $ or equivalently
 \[
 \uu = \cc\cdot\FF
 \]
@@ -268,12 +268,12 @@ F_i^*  = F_i \quad  \forall i\in \cF
 \sum_jc_{ij}F_j^*  = u_i \quad \forall i\in \UU
 \]
 
-We need to solve $|\UU|$ equqtions to calculate $|\UU|$ unknown $F_i^*$
+We need to solve $|\UU|$ equations to calculate $|\UU|$ unknown $F_i^*$
 \[
 \sum_{j\in \UU} c_{ij}F_j^* = u_i - \sum_{j\in\cF} c_{ij}F_j^*
 \]
 
-Because $\cc$ is positive deinite, all of its principal minors are positive. We can order the indices $i$ so that the first $|\UU|$ indices are associated with $\UU$ and the remaining indices with $\cF$.
+Because $\cc$ is positive definite, all of its principal minors are positive. We can order the indices $i$ so that the first $|\UU|$ indices are associated with $\UU$ and the remaining indices with $\cF$.
 Because $[\cc]\in\UU\times\UU$ has positive determinant, the above equation can be uniquely solved.
 
 Method for finding approximate (even exact) solutions to equations.
@@ -328,7 +328,7 @@ F_i' = \FF\cdot\ee_i'= F_j\ee_j\cdot\ee_i'
 \begin{equation}\label{eq:3.1}
 F_i' = l_{ij} F_j.
 \end{equation}
-A vector in $\RR^3$ is a set of 3 quantities $\FF = \mx{F_1\\F_2\\F_3}$ that when the coordinate system is changed, transforms according to \ref{eq:3.1}. Examples include forces, velocotiy, displacements, position, torque.
+A vector in $\RR^3$ is a set of 3 quantities $\FF = \mx{F_1\\F_2\\F_3}$ that when the coordinate system is changed, transforms according to \ref{eq:3.1}. Examples include forces, velocitiy, displacements, position, torque.
 
 we will define a rank $n$ tensor $\underline{\underset{\vdots}{\underline\bA}}$ ( underlined $n$ times) that is made up of $3^n$ components in $\RR$, $A_{i_1, i_2, \dots,  i_n}$. When we transform coordinates, these components will transform in a way that generalize \ref{eq:3.1}:
 \[
@@ -350,7 +350,7 @@ A' = l_{ik} l_{jm} A_{km} =  l_{ik} A_{km} (l^T)_{mj}
 where $A$ is an old set of 9 numbers, $A'$ is the new set of 9 numbers. e.g. include: stress, strain (or rate of strain).
 
 \begin{theorem} (see Landau \& Lifschitz)
-Define a {\bf isotropic} tensor to be a tensor $\underline{\underline A}$ whose coordinate components are independent of the {\bf allowed} choice of coordinate system.
+Define an {\bf isotropic} tensor to be a tensor $\underline{\underline A}$ whose coordinate components are independent of the {\bf allowed} choice of coordinate system.
 \end{theorem}
 In $\RR^3$,
 
