@@ -5,6 +5,7 @@
 \usepackage{listings}
 %\usepackage{algorithm,algorithmic}
 \usepackage{amssymb,amsmath}
+\usepackage{dsfont}
 \usepackage{url}
 \usepackage[lined,ruled,linesnumbered]{algorithm2e}
 \lstset{language=Python}          % Set your language (you can change the language for each code-block optionally)
@@ -43,6 +44,9 @@
 \newcommand{\uu}{{\bf u}} 
 \newcommand{\FF}{{\bf F}} 
 \newcommand{\bA}{{\bf A}} 
+\newcommand{\bB}{{\bf B}} 
+\newcommand{\bS}{{\bf S}} 
+\newcommand{\bX}{{\bf X}} 
 
 \newcommand{\bnabla}{{\bf \nabla}} 
 
@@ -385,19 +389,55 @@ Using summation convenction to evaluation some vector calculus quantities.
 \[
 [\bnabla(\frac{\xx}{r})]_{ij}= \frac{\partial}{\partial x_i}\frac{x_j}{r} = \frac{\delta_{ij}}{r} - \frac{x_ix_j}{r^3}
 \]
+\[
+[\bnabla(\frac{\xx}{r})] = \frac{\bnabla \xx}{r} + \frac{\xx\xx}{r^3}
+\]
 
+\subsection{Multiplication of vectors}
+Given two vectors $\bA$, $\bB$ we can multiply in 3 ways
+\[
+\bA \cdot\bB \text{ inner product }
+\]
+\[ 
+\bA\bB \text{ outer product }
+\]
+\[
+[\bA\times\bB]_i = \epsilon_{ijk}A_jB_k
+\]
+\[
+\bA\times\bB = \epsilon:(\bB\bA)
+\]
+\[
+\bA\bB = \delta_{ij}A_iB_j = {\mathds 1}:(\bA\bB)
+\]
 
+Other methods of multiplying do not produce tensors (for example taking component-wise product of two tensors).
+If I have another tensor $\cc$, I could form a product $\bA\cdot\cc\cdot\bB$, but this is a product between $\bA$, $\cc$, and $\bB$.
 
+Consider, $\uu$ a vector field, $\uu: \RR^3 \to\RR^3$,
+\begin{align*}
+[\uu\times(\nabla\times\uu)]_i &= \epsilon_{ijk}u_j(\nabla\times\uu)_k = \epsilon_{ijk}u_l\epsilon_{klm}\frac{\partial u_m}{\partial u_l}\\
+&=  \epsilon_{kij}\epsilon_{klm} u_j\frac{\partial u_m}{\partial u_l}\\
+&=(\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})u_j\frac{\partial u_m}{\partial u_l}\\
+&=u_m\frac{\partial u_m}{\partial u_i} - u_l\frac{\partial u_i}{\partial u_l}\\
+&=\bnabla (\frac 1 2 \uu^2) - (\uu\cdot\bnabla)\uu
+\end{align*}
 
+Say that a tensor $\bA$ is symmetric if $A_{ij} = A_{ji}$, and anti-symmetric if $A_{ij} =- A_{ji}$. Suppose $\bS$ is symmetric, $\epsilon:\bS = 0$ by simple calculation.
 
+We can write vectors in the form
+\[
+\FF = F_i\ee_i,
+\]
+where $\{\ee_i\}$ are our basis vectors. We can write a tensor in the same way
+\[
+\bA = A_{ij}\ee_i\ee_j
+\]
+The outer products $\ee_i\ee_j$ is a bsis for rank 2 tensors.
 
+We can write tensors w.r.t. $\hat\xx, \hat{\bf y}, \hat{\bf z}$, or w.r.t. $\ee_r, \ee_{\theta}, \ee_{\phi}$ (spherical polar basis), or  $\ee_r, \ee_{\phi}, \ee_{z}$ (cylindrical polar basis).
 
-
-
-
-
-
-
+Consider a body that is deformed by applying some set of forces. Before the forces are applied, I can identify each point in the body by its position $\bX$. I will assume that there is a differentiable field $\xx (\bX,t)$. $\xx (\bX,t)$ tells me the new location of the point at time $t$.
 
 
 
