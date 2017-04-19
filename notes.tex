@@ -38,20 +38,29 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
 
+
 \newcommand{\xx}{{\bf x}}  
 \newcommand{\bb}{{\bf b}} 
 \newcommand{\ee}{{\bf e}} 
+\newcommand{\ff}{{\bf f}} 
+\newcommand{\nn}{{\bf n}} 
+\newcommand{\rr}{{\bf r}} 
 \newcommand{\uu}{{\bf u}} 
 \newcommand{\FF}{{\bf F}} 
 \newcommand{\bA}{{\bf A}} 
 \newcommand{\bB}{{\bf B}} 
+\newcommand{\bE}{{\bf E}} 
 \newcommand{\bS}{{\bf S}} 
 \newcommand{\bX}{{\bf X}} 
+\newcommand{\bT}{{\bf T}} 
+
 
 \newcommand{\bnabla}{{\bf \nabla}} 
 
 \newcommand{\kk}{{\underline{\underline{k}}}} 
 \newcommand{\cc}{{\underline{\underline c}}} 
+\newcommand{\ssigma}{{\underline{\underline \sigma}}} 
+
 
 \newcommand{\RR}{{\mathbb R}}  
 \newcommand{\EE}{{\mathbb E}}  
@@ -61,12 +70,15 @@
 \newcommand{\UU}{{\mathcal U}} 
 \newcommand{\cF}{{\mathcal F}} 
 
+\newcommand{\dV}{{\text{d}V}} 
+\newcommand{\dS}{{\text{d}S}} 
+
 \newcommand{\Var}{\text{Var}}  
 \newcommand{\std}{\text{std}}  
 
 \newcommand{\lambdat}{{\bf \lambda}}
 \newcommand{\mx}[1]{\begin{pmatrix}#1\end{pmatrix}}
-\newcommand{\dx}[1]{\text{ d\,}#1}
+\newcommand{\dx}[1]{\text{ d}#1}
 
 
 \begin{document}
@@ -76,9 +88,7 @@
 \date{}
 
 \maketitle
-
 \section{What is a continuum?}
-
 The quantities that we are interested in, for example displacement, velocity, pressure, stress... can be written as fields.
 For example, we can define a displacement field $\uu(\xx, t) : \RR^3\times \RR \rightarrow \RR^3$, which tells us how the matter in a body is displaced when forces are applied. At each point $(\xx,t)$, $\uu$ gives the average displacement of all molecules contained in a small box that is centered at $\xx$.
 
@@ -342,9 +352,9 @@ e.g.
 
 $n=0$, $A$ is s scalar. e.g., temperature, pressure, energy.
 
-$n=1$ $\underline A$ is a vector that transforms by matrix multiply.
+$n=1$, $\underline A$ is a vector that transforms by matrix multiply.
 
-$n=2$ $\underline{\underline A}$ is an array of 9 numbers that transforms by 
+$n=2$, $\underline{\underline A}$ is an array of 9 numbers that transforms by 
 \[
 A' = LAL^T, \quad L = (l_{ij}),
 \]
@@ -437,7 +447,103 @@ The outer products $\ee_i\ee_j$ is a bsis for rank 2 tensors.
 
 We can write tensors w.r.t. $\hat\xx, \hat{\bf y}, \hat{\bf z}$, or w.r.t. $\ee_r, \ee_{\theta}, \ee_{\phi}$ (spherical polar basis), or  $\ee_r, \ee_{\phi}, \ee_{z}$ (cylindrical polar basis).
 
-Consider a body that is deformed by applying some set of forces. Before the forces are applied, I can identify each point in the body by its position $\bX$. I will assume that there is a differentiable field $\xx (\bX,t)$. $\xx (\bX,t)$ tells me the new location of the point at time $t$.
+
+
+\subsection{Stress Tensor}
+Consider a body that is deformed by applying some set of forces. Before the forces are applied, I can identify each point in the body by its position $\bX$. I will assume that there is a differentiable field $\xx (\bX,t)$. $\xx (\bX,t)$ tells me the new location of the point at time $t$. So we can define a displacement field $\uu$, $\uu = \xx-\bX$, and a vector field $\ff(\xx,t)$ that defines the force per unit volume of material. 
+
+Suppose we have an infinitesimal volume $\dV$, located at $\xx$, the total body force acting on $\dV$ is $\ff(\xx,t)\dV$. Body forces include gravity, electric forces. We also need to define a traction or surface force field as follows. 
+
+Across any element of surface has unit normal $\nn$, and area $\dS$,  {\bf traction forces} must act the material on the positive side of the element applies a force $\bT_{\nn}\dS$ on the material on the negative side of the element.
+
+That is, I assume I can define a vector field $\bT(\xx, t)$ that tells me what elastic forces are acting within the body. In fact, we can show that all of the traction fields associated with the deformation of a body can be derived from a single second rank tensor field $\ssigma(\xx,t)$, that is
+\[
+\bT_{\nn}(\xx,t) = \ssigma(\xx,t)\cdot \nn .
+\]
+By Newton's third law,
+\[
+\bT_{\nn}(\xx,t) = -\bT_{-\nn}(\xx,t).
+\]
+
+Consider Cauchy's stress tetrahedron, $\nn = (n_x, n_y, n_z)$. Length scale $L\to 0$ eventually.
+mass $\times$ acceleration $O(L^3)$= sum of traction forces $O(L^2)$ $+$ body forces $O(L^3)$. As $L\to 0$, sum of traction forces must be 0.  force on sloping face
+%\[
+%\bT_{\nn}\underset{\text {centroid of face}{|}\dS = (\bF_{\nn}\underset{(0,0,0)}{|} + O(L))\dS 
+%\]
+similarly for other faces.
+\[
+\bT_{\nn}\dS + \bT_{-\ee_z}n_z\dS +\bT_{-\ee_y}n_y\dS +\bT_{-\ee_x}n_x\dS .
+\]
+So 
+\[
+\bT_{\nn}\dS = \bT_{\ee_z}n_z\dS +\bT_{\ee_y}n_y\dS +\bT_{\ee_x}n_x\dS .
+\]
+
+Once $\bT_{\ee_x}$, $\bT_{\ee_y}$,$\bT_{\ee_z}$, are all known, we can calculate $\bT_{\nn}$, for arbitrary $\nn$. We can construct a tensor from these vectors.
+\[
+\sigma_{11} = (\bT_{\ee_x})_1, \quad \sigma_{12} = (\bT_{\ee_y})_1,\quad \sigma_{13} = (\bT_{\ee_z})_1
+\]
+that is, 
+\[
+\bT_{\nn}(\xx,t) = \ssigma(\xx,t)\cdot \nn .
+\]
+for an array of $3\times 3$ numbers. is it  rank 2 tensor.
+Note that $\bT_{\nn}$ and $\nn$ are both vectors. Let's suppose we transform coordinates, $\nn$ has new components $n+i'$ 
+\[
+{\bT_{\nn}}'_i = l_{ij} {\bT_{\nn}}_j = l_{ij} \sigma_{jk}n_k
+\]
+\[
+\sigma'_{ik}n'_k =  l_{ij} \sigma_{jk} l_{mk}n_m'
+\]
+\[
+n_k'(\sigma_{ik}' - l_{ij}l_{km}\sigma_{jm})=0.
+\]
+for arbitrary $n_k'$ vectors.
+
+Take a control volume at equilibrium,
+\[
+\int_V \ff \dV + \int_S \bT_{\nn}\dS = 0.
+\]
+By  divergence theorem, 
+\[
+\int_S \sigma_{ijkl}n_i = \int_V \frac{\partial \sigma_{ijkl}}{\partial x_i}
+\]
+\[
+\int_V \ff \dV + \int_V\frac{\partial (\sigma_{ij}\ee_i)}{\partial x_j}\dV = 0.
+\]
+\[
+\ff + \nabla \cdot\ssigma^T = 0.
+\]
+(except possibly on a set of measure 0.)
+This is called {\bf Cauchy's equilibrium law}.
+
+Now consider the torque,
+\[
+\int_V \rr\times \ff \dV + \int_S (\rr \times \ssigma\cdot \nn)\dS = 0.
+\]
+(next steps do not apply to magnetic objects).
+\begin{align*}
+\int_S \ee_i \epsilon_{ijk}x_j\sigma_{kl}n_l\dS &=  \int_V \ee_i \epsilon_{ijk}\frac{\partial}{\partial x_l}(x_j\sigma_{kl}) \dV\\
+&= \int_V \ee_i \epsilon_{ijk} ( \delta_{jl}\sigma_{kl} + x_j\frac{\partial}{\partial x_l}(x_j\sigma_{kl}) \dV
+\end{align*}
+
+\[
+\int_V (\rr\times(\ff+\nabla\cdot\ssigma^T) + \ee_i\epsilon_{ilk}\sigma_{kl}=0.
+\]
+The first term vanishes by force balance. The second term tells us that 
+\[
+\ee_i \epsilon_{ijk}\sigma_{kj} = 0,
+\]
+so 
+\[
+\epsilon_{ijk}\sigma_{kj} = 0 \quad \forall i.
+\]
+i.e.
+\[
+\ssigma = \ssigma^T.
+\]
+
+Need to relate $\ssigma$ to how much the body deforms.
 
 
 
@@ -446,17 +552,31 @@ Consider a body that is deformed by applying some set of forces. Before the forc
 
 
 
+\subsection{Measuring deformation/strain}
+We are interested in knowing how far initially nearby parts of the object move apart when it is deformed.  A point at $\bX + \dx{\bX}$ move to $\xx + \dx{\xx}$, the original separation is $\dx{S}^2 = \dx{X_i}\dx{X_i}$, are now separated by $\dx{s}^2 = \dx{x_i}\dx{x_i}$.
+If $\dx{\bX_i}$ and $\dx{\xx_i}$ are infinitesimal,
+\[
+\dx{x_i}  = \frac{\partial x_i}{\partial X_j} \dx{X_j}.
+\]
+\begin{align*}
+ds^2 - dS^2 &= ( \frac{\partial x_i}{\partial X_j}  \frac{\partial x_i}{\partial X_k}  - \delta_{jk} )\dx{X_j} \dx{X_k} \\
+&=  2 e_{jk} \dx{X_j} \dx{X_k}\\
+&= ( \delta_{jk} -  \frac{\partial X_i}{\partial x_j}  \frac{\partial X_i}{\partial x_k} )\dx{x_j}\dx{x_k}\\
+&=  2 E_{jk} \dx{x_j} \dx{x_k}\
+\end{align*}
+$\underline{\underline e}$ is called Cauchy-Alamsi strain, and $\underline{\underline E}$  Green's strain.
 
+It is useful to rewrite in terms of displacement:
+\[
+\uu = \xx - \bX
+\]
+\[
+e_{jk} = \frac 1 2 ( \frac{\partial u_j}{\partial x_k}  +  \frac{\partial u_k}{\partial x_j} -  \frac{\partial u_k}{\partial x_j} \frac{\partial u_k}{\partial x_k}      )
+\]
 
-
-
-
-
-
-
-
-
-
+\[
+E_{jk} = \frac 1 2 ( \frac{\partial u_j}{\partial X_k}  +  \frac{\partial u_k}{\partial X_j} -  \frac{\partial u_k}{\partial X_j} \frac{\partial u_k}{\partial X_k}      )
+\]
 
 
 
