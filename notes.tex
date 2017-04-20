@@ -49,6 +49,7 @@
 \newcommand{\FF}{{\bf F}} 
 \newcommand{\bA}{{\bf A}} 
 \newcommand{\bB}{{\bf B}} 
+\newcommand{\bC}{{\bf C}} 
 \newcommand{\bE}{{\bf E}} 
 \newcommand{\bS}{{\bf S}} 
 \newcommand{\bX}{{\bf X}} 
@@ -60,7 +61,8 @@
 \newcommand{\kk}{{\underline{\underline{k}}}} 
 \newcommand{\cc}{{\underline{\underline c}}} 
 \newcommand{\ssigma}{{\underline{\underline \sigma}}} 
-
+\newcommand{\te}{{\underline{\underline e}}} 
+\newcommand{\ta}{{\underline{\underline a}}} 
 
 \newcommand{\RR}{{\mathbb R}}  
 \newcommand{\EE}{{\mathbb E}}  
@@ -403,13 +405,41 @@ Using summation convenction to evaluation some vector calculus quantities.
 [\bnabla(\frac{\xx}{r})] = \frac{\bnabla \xx}{r} + \frac{\xx\xx}{r^3}
 \]
 
+
+
+
+
+
 \subsection{Multiplication of vectors}
-Given two vectors $\bA$, $\bB$ we can multiply in 3 ways
+Given 2 tensors $\bA$ (rank n) and $\bB$ (rank m), we can define different products of $\bA$ and $\bB$.
+
+Outer product:
 \[
-\bA \cdot\bB \text{ inner product }
+\bC  = \bA \bB
 \]
-\[ 
-\bA\bB \text{ outer product }
+\[
+C_{i_1 i_2 \dots i_{m+n}} = A_{i_1i_2\dots i_n} B_{i_{n+1}\dots i_{n+m}}.
+\]
+
+Inner product: 
+\[
+\bC = \bA \cdot\bB 
+\]
+\[
+C_{i_1 i_2 \dots \i_{m+n-2}} = A_{i_1i_2\dots i_{n-1}j} B_{j i_n i_{n+1}\dots i_{n+m-2}}.
+\]
+
+And we can keep summing, contraction: 
+\[
+\bC = \bA : \bB
+\]
+\[
+C_{i_1 i_2 \dots i_{m+n-4}} = A_{i_1i_2\dots i_{n-2}jk} B_{k j i_{n-1} i_{n}\dots i_{n+m-4}}.
+\]
+
+Given two vectors $\bA$, $\bB$ we can multiply in 3 ways.
+\[
+\bA\cdot\bB, \quad \bA\bB, \quad \bA\times\bB
 \]
 \[
 [\bA\times\bB]_i = \epsilon_{ijk}A_jB_k
@@ -417,24 +447,31 @@ Given two vectors $\bA$, $\bB$ we can multiply in 3 ways
 \[
 \bA\times\bB = \epsilon:(\bB\bA)
 \]
+We can define the Kronecker (identity/idempotent) tensor
+\[
+[\mathds 1 ]_{ij} = \delta_{ij}
+\]
 \[
 \bA\bB = \delta_{ij}A_iB_j = {\mathds 1}:(\bA\bB)
 \]
 
 Other methods of multiplying do not produce tensors (for example taking component-wise product of two tensors).
 If I have another tensor $\cc$, I could form a product $\bA\cdot\cc\cdot\bB$, but this is a product between $\bA$, $\cc$, and $\bB$.
+\begin{enumerate}
+\item{Example}
 
 Consider, $\uu$ a vector field, $\uu: \RR^3 \to\RR^3$,
 \begin{align*}
-[\uu\times(\nabla\times\uu)]_i &= \epsilon_{ijk}u_j(\nabla\times\uu)_k = \epsilon_{ijk}u_l\epsilon_{klm}\frac{\partial u_m}{\partial u_l}\\
-&=  \epsilon_{kij}\epsilon_{klm} u_j\frac{\partial u_m}{\partial u_l}\\
-&=(\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})u_j\frac{\partial u_m}{\partial u_l}\\
-&=u_m\frac{\partial u_m}{\partial u_i} - u_l\frac{\partial u_i}{\partial u_l}\\
+[\uu\times(\nabla\times\uu)]_i &= \epsilon_{ijk}u_j(\nabla\times\uu)_k = \epsilon_{ijk}u_j\epsilon_{klm}\frac{\partial u_m}{\partial x_l}\\
+&=  \epsilon_{kij}\epsilon_{klm} u_j\frac{\partial u_m}{\partial x_l}\\
+&=(\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})u_j\frac{\partial u_m}{\partial x_l}\\
+&=u_m\frac{\partial u_m}{\partial x_i} - u_l\frac{\partial u_i}{\partial x_l}\\
 &=\bnabla (\frac 1 2 \uu^2) - (\uu\cdot\bnabla)\uu
 \end{align*}
+\item{Example}
 
 Say that a tensor $\bA$ is symmetric if $A_{ij} = A_{ji}$, and anti-symmetric if $A_{ij} =- A_{ji}$. Suppose $\bS$ is symmetric, $\epsilon:\bS = 0$ by simple calculation.
-
+\end{enumerate}
 We can write vectors in the form
 \[
 \FF = F_i\ee_i,
@@ -449,10 +486,11 @@ We can write tensors w.r.t. $\hat\xx, \hat{\bf y}, \hat{\bf z}$, or w.r.t. $\ee_
 
 
 
+
 \subsection{Stress Tensor}
 Consider a body that is deformed by applying some set of forces. Before the forces are applied, I can identify each point in the body by its position $\bX$. I will assume that there is a differentiable field $\xx (\bX,t)$. $\xx (\bX,t)$ tells me the new location of the point at time $t$. So we can define a displacement field $\uu$, $\uu = \xx-\bX$, and a vector field $\ff(\xx,t)$ that defines the force per unit volume of material. 
 
-Suppose we have an infinitesimal volume $\dV$, located at $\xx$, the total body force acting on $\dV$ is $\ff(\xx,t)\dV$. Body forces include gravity, electric forces. We also need to define a traction or surface force field as follows. 
+Suppose we have an infinitesimal volume $\dV$, located at $\xx$, the total body force acting on $\dV$ is $\ff(\xx,t)\dV$. Body forces include gravity, electric forces. We also need to define a {\bf traction} or {\bf surface force field} as follows. 
 
 Across any element of surface has unit normal $\nn$, and area $\dS$,  {\bf traction forces} must act the material on the positive side of the element applies a force $\bT_{\nn}\dS$ on the material on the negative side of the element.
 
@@ -466,15 +504,15 @@ By Newton's third law,
 \]
 
 Consider Cauchy's stress tetrahedron, $\nn = (n_x, n_y, n_z)$. Length scale $L\to 0$ eventually.
-mass $\times$ acceleration $O(L^3)$= sum of traction forces $O(L^2)$ $+$ body forces $O(L^3)$. As $L\to 0$, sum of traction forces must be 0.  force on sloping face
-%\[
-%\bT_{\nn}\underset{\text {centroid of face}{|}\dS = (\bF_{\nn}\underset{(0,0,0)}{|} + O(L))\dS 
-%\]
-similarly for other faces.
+mass $\times$ acceleration $O(L^3)$= sum of traction forces $O(L^2)$ $+$ body forces $O(L^3)$. As $L\to 0$, sum of traction forces must be 0.  Force on sloping face:
 \[
-\bT_{\nn}\dS + \bT_{-\ee_z}n_z\dS +\bT_{-\ee_y}n_y\dS +\bT_{-\ee_x}n_x\dS .
+\bT_{\nn}\rvert_ {\text {centroid of face}}\dS = (\bT_{\nn}\rvert_{\{0,0,0\}}+ O(L))\dS 
 \]
-So 
+Similarly for other faces. By force balance:
+\[
+\bT_{\nn}\dS + \bT_{-\ee_z}n_z\dS +\bT_{-\ee_y}n_y\dS +\bT_{-\ee_x}n_x\dS,
+\]
+so 
 \[
 \bT_{\nn}\dS = \bT_{\ee_z}n_z\dS +\bT_{\ee_y}n_y\dS +\bT_{\ee_x}n_x\dS .
 \]
@@ -488,26 +526,28 @@ that is,
 \bT_{\nn}(\xx,t) = \ssigma(\xx,t)\cdot \nn .
 \]
 for an array of $3\times 3$ numbers. is it  rank 2 tensor.
-Note that $\bT_{\nn}$ and $\nn$ are both vectors. Let's suppose we transform coordinates, $\nn$ has new components $n+i'$ 
+Note that $\bT_{\nn}$ and $\nn$ are both vectors. Let's suppose we transform coordinates, $\nn$ has new components $n_i'$ ,
 \[
-{\bT_{\nn}}'_i = l_{ij} {\bT_{\nn}}_j = l_{ij} \sigma_{jk}n_k
+{T_{n}}'_i = l_{ij} {T_{n}}_j = l_{ij} \sigma_{jk}n_k
 \]
-\[
-\sigma'_{ik}n'_k =  l_{ij} \sigma_{jk} l_{mk}n_m'
-\]
+\begin{align*}
+\sigma'_{ik}n'_k &=  l_{ij} \sigma_{jk} l_{mk}n_m' \quad (n_k = l_{mk}n_m')\\
+&=   l_{ij} \sigma_{jm} l_{km}n_k' 
+\end{align*}
 \[
 n_k'(\sigma_{ik}' - l_{ij}l_{km}\sigma_{jm})=0.
 \]
-for arbitrary $n_k'$ vectors.
+for arbitrary $n_k'$ vectors. This shows that the $\ssigma$ we defined is indeed a tensor.
 
 Take a control volume at equilibrium,
 \[
 \int_V \ff \dV + \int_S \bT_{\nn}\dS = 0.
 \]
-By  divergence theorem, 
+By  divergence theorem, which says that
 \[
-\int_S \sigma_{ijkl}n_i = \int_V \frac{\partial \sigma_{ijkl}}{\partial x_i}
+\int_S \sigma_{ijkl}n_i = \int_V \frac{\partial \sigma_{ijkl}}{\partial x_i},
 \]
+we have
 \[
 \int_V \ff \dV + \int_V\frac{\partial (\sigma_{ij}\ee_i)}{\partial x_j}\dV = 0.
 \]
@@ -524,7 +564,8 @@ Now consider the torque,
 (next steps do not apply to magnetic objects).
 \begin{align*}
 \int_S \ee_i \epsilon_{ijk}x_j\sigma_{kl}n_l\dS &=  \int_V \ee_i \epsilon_{ijk}\frac{\partial}{\partial x_l}(x_j\sigma_{kl}) \dV\\
-&= \int_V \ee_i \epsilon_{ijk} ( \delta_{jl}\sigma_{kl} + x_j\frac{\partial}{\partial x_l}(x_j\sigma_{kl}) \dV
+&= \int_V \ee_i \epsilon_{ijk} ( \delta_{jl}\sigma_{kl} + x_j\frac{\partial}{\partial x_l}\sigma_{kl}) \dV\\
+&=  \int_V \ee_i \epsilon_{ijk} ( \sigma_{kj} + x_j\frac{\partial}{\partial x_l}\sigma_{kl})\dV
 \end{align*}
 
 \[
@@ -560,11 +601,11 @@ If $\dx{\bX_i}$ and $\dx{\xx_i}$ are infinitesimal,
 \]
 \begin{align*}
 ds^2 - dS^2 &= ( \frac{\partial x_i}{\partial X_j}  \frac{\partial x_i}{\partial X_k}  - \delta_{jk} )\dx{X_j} \dx{X_k} \\
-&=  2 e_{jk} \dx{X_j} \dx{X_k}\\
+&:=  2 e_{jk} \dx{X_j} \dx{X_k}\\
 &= ( \delta_{jk} -  \frac{\partial X_i}{\partial x_j}  \frac{\partial X_i}{\partial x_k} )\dx{x_j}\dx{x_k}\\
-&=  2 E_{jk} \dx{x_j} \dx{x_k}\
+&:=  2 E_{jk} \dx{x_j} \dx{x_k}.
 \end{align*}
-$\underline{\underline e}$ is called Cauchy-Alamsi strain, and $\underline{\underline E}$  Green's strain.
+$\underline{\underline e}$ is called Cauchy-Almansi strain, and $\underline{\underline E}$  Green's strain.
 
 It is useful to rewrite in terms of displacement:
 \[
@@ -577,6 +618,134 @@ e_{jk} = \frac 1 2 ( \frac{\partial u_j}{\partial x_k}  +  \frac{\partial u_k}{\
 \[
 E_{jk} = \frac 1 2 ( \frac{\partial u_j}{\partial X_k}  +  \frac{\partial u_k}{\partial X_j} -  \frac{\partial u_k}{\partial X_j} \frac{\partial u_k}{\partial X_k}      )
 \]
+Those of you reading this note, why is this straight forward to see??  Please add notes here !!! thanks!!!
+
+
+
+\section{Linear Elasticity}
+Suppose that the deformation of the body is small, i.e. $\|\bnabla \uu\| \ll 1$, and assume displacement is small, $\| \uu\|\ll L$, where L is characteristic object size. Then to leading order the strain tensors have the same components
+\[
+E_{ij} \approx e_{ij} \approx \frac 1 2 (\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i})
+\]
+
+This is called Cauchy's infinitesimal strain tensor.
+
+Interpretation. Consider a line element aligned with the x-axis. Line element change in length is 
+\[
+ds^2 - dS^2 = 2 e_{xx}dX^2
+\]
+Write
+\[
+\uu = (u, v, w),
+\]
+\begin{align*}
+\dx{s^2} &= \dx{x^2} + \dx{y^2} + \dx{z^2} \\
+ &= (X + dX + u(X+dX, Y, Z) - X- u(X,Y,Z))^2  \\
+ &+   (v(X+dX,Y , Z)  - v(X,Y,Z))^2 \\
+ &+  ( w(X+dX, Y, Z) - w(X,Y,Z))^2\\
+ &= dX^2 (1+2\frac{\partial u}{\partial X} ) + h.o.t \quad (\|\nabla \uu \|\ll 1)
+\end{align*}
+Change in length is
+\[
+ds^2 - dS^2 = 2 \frac{\partial u}{\partial X} dX^2 = 2 e_{xx} dX^2
+\]
+Relative change in length
+\[
+\frac{ds-dS}{dS} = \sqrt{1+2e_{xx}}  -1
+\]
+$e_{xx}$ measures {\bf fractional stretch} in the x-direction.
+
+Now consider the off-diagonal terms, for example $e_{xy}$.
+\[
+A = (u(0), v(0),w(0))
+\]
+\[
+B = (u(0), v(0),w(0)) + dX(1+ \frac{\partial u}{\partial X},  \frac{\partial v}{\partial X},  \frac{\partial w}{\partial X})
+\]
+\[
+C = (u(0), v(0),w(0))+ dX( \frac{\partial u}{\partial X},  1+\frac{\partial v}{\partial X},  \frac{\partial w}{\partial X})
+\]
+
+\[
+\tan \alpha_x = \frac{ \frac{\partial v}{\partial X}}{1 +  \frac{\partial u}{\partial X}}
+\]
+\[
+\alpha_x\approx  \frac{\partial v}{\partial X}.
+\]
+Similarly,
+\[
+\alpha_y\approx  \frac{\partial u}{\partial X}.
+\]
+Change in the angle made by the two sides of the $L$ is 
+\[
+-\alpha_x -\alpha_y = -2e_{xy}.
+\]
+Why does $\underline{\underline e}$ characterize strain but not $\bnabla\uu$ or $(\bnabla\uu)^T$?\[
+\underline{\underline e} = \frac 1 2 (\bnabla\uu + (\bnabla\uu)^T)
+\]
+Let's look at the displacements within a body near a point {\bf 0}. If a point start at $\dx{\bX}$, and gets moved to $\uu(\dx{\bX} )$, I expect the body to resist elastically.
+\[
+\uu(\dx{\bX}) - \uu(0) = (d\bX \bnabla) \uu(0) = d\bX\cdot(\bnabla \uu).
+\] 
+Decompose $\uu$ into symmetric and skew-symmetric parts. The symmetric part is $\te$, call the skew-symmetric part $\ta$. Let
+\[
+\omega_i = \frac 1 2 \epsilon_{ijk}a_{jk}
+\]
+Then we claim that 
+\[
+a_{ij} = \epsilon_{ijk}\omega_k.
+\]
+Proof of claim:
+\begin{align*}
+\epsilon_{ijk}\omega_k &= \frac 1 2  \epsilon_{ijk}  \epsilon_{klm} a_{lm} \\
+&=  \frac 1 2  \epsilon_{kij}  \epsilon_{klm} a_{lm}\\
+&=\frac 1 2 (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})a_{lm}\\
+&= \frac 1 2 (a_{ij} - a_{ji}) \\
+&= a_{ij}.
+\end{align*}
+\[
+dX\cdot \ta = \omega\times dX
+\]
+This is rigid body rotation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
