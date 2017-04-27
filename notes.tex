@@ -46,6 +46,7 @@
 \newcommand{\nn}{{\bf n}} 
 \newcommand{\rr}{{\bf r}} 
 \newcommand{\uu}{{\bf u}} 
+\newcommand{\vv}{{\bf v}} 
 \newcommand{\FF}{{\bf F}} 
 \newcommand{\bA}{{\bf A}} 
 \newcommand{\bB}{{\bf B}} 
@@ -709,26 +710,249 @@ dX\cdot \ta = \omega\times dX
 This is rigid body rotation.
 
 
+$\te$ is a symmetric tensor, i.e. is diagonizable wrt three perpendicular eigenvectors $\vv_1,$ $\vv_2,$ $\vv_3$ , where $\te\cdot \vv_1 = \lambda_1\vv_1$. Call the $\vv_i$'s the {\bf  directions of principal stretch}.
 
 
 
 
+\subsection{Constitutive equation for linear elasticity}
+A constitutive equation gives us a way of computing stresses from strains
+\[
+\ssigma  = f(\te)
+\]
+$f$ is material specific.
+
+Want $\ssigma$ to be linearly dependent on $\te$. 
+i.e. we assume
+\[
+\sigma_{ij} = C_{ijkl}e_{kl}
+\]
+Where $C$ is a rank 4 tensor, (the {\bf elastic modulus tensor})
+\[
+C_{ijkl} = C_{jikl}
+\]
+because $\ssigma$ is symmetric.
+$\te$ is also symmetric, so only symmetric part of $C_{ijkl}$ contributes to $\sigma_{ij}$, so assume $C_{ijkl} = C_{ijlk}$ wlog. So $C_{ijkl}$ has 36 free components.
+
+We can reduce the number of free components further by making an additional assumption. P.V.W.
+
+Calculate total elastic energy stored in a control volume V, when body is deformed. $\ssigma$ and $\FF$ are ramped up slowly from 0 to $\ssigma^*$, $\FF^*$. Work done in increasing forces 
+\begin{align*}
+\dx{U} &= \int_V \FF\cdot\dx{\uu} \dx{V} + \int_{\partial V} \dx{u}\cdot \ssigma\cdot\nn\dx{S}\\
+&= \int_V \FF\cdot\dx{\uu} + \nabla\cdot (dx{\uu}\cdot \ssigma) \dx{V} \\
+&= \int_V \FF\cdot\dx{\uu} + \dx{\uu}\cdot(\nabla\cdot\ssigma^T + \nabla\dx{\uu}:\ssigma)\dx{V}\\
+&= \dx{e_{ij}}\sigma_{ij} 
+\end{align*}
+where $\dx{\te} = \frac 1 2 (\nabla\dx{\uu} + (\nabla\dx{\uu} )^T)$.
+\[
+dU = \int_V\sigma_{ij}\dx{e_{ij}}dV
+\]
+total amount of work that we do is 
+\[
+U = \int_V\int_0^{\te^*}\sigma_{ij}\dx{e_{ij}}dV
+\]
+We can define a scalar field 
+\[
+U = \int_{strain} \sigma_{ij}\dx{e_{ij}}
+\]
+which gives elastic energy stored volume of body.
+\[
+U = \int_0^1C_{ijkl}e_{kl}^*te_{ij}^*dt = \frac 1 2 C_{ijkl}e_{ij}^*e_{kl}^*
+\]
+
+Total work done per volume in building up stress $\sigma_{ij}$ is $\frac 1 2 C_{ijkl}e_{ij}e_{kl} = \frac 1 2 \sigma_{ij}e_{ij}$ if stress increases linearly in time.
+
+If this quantity is independent of the way stress ( + strains) are built up, then we can define PVW
+\[
+\frac{\partial U}{\partial e_{ij}} = \sigma_{ij}
+\]
+so
+\[
+\sigma_{ij} = \frac 1 2 C_{ijkl}e_{kl} + \frac 1 2 C_{klij}e_{kl}
+\]
+\[
+C_{ijkl}e_{kl} = C_{klij}e_{kl}
+\]
+So
+\[
+C_{ijkl} = C_{klij}
+\]
+i.e. $C_{ijkl}$ as at most 21 independent components.
+
+Most materials we study are isotropic. i.e.
+\[
+C_{ijkl} = \lambda \delta_{ij}\delta_{kl} + \mu \delta_{ik}\delta_{jl}  + \nu \delta_{il}\delta_{jk}
+\]
+for 3 coefficients $\lambda$, $\mu$, $\nu$.
 
 
 
+\begin{align*}
+e_{ij} &= \frac{1}{2G} (\sigma_{ij} - \frac{\lambda\delta_{ij}\sigma_{kk}}{3\lambda+ 2 G})\\
+	&= \frac1 E ((\nu+1)\sigma_{ij} -\nu \sigma_{kk}\delta_{ij})\\
+\end{align*}
+
+E is called {\bf Young's modulus}.
+$\nu$ {\bf Poisson ratio}.
+$\lambda$, $G$, $E$ are all elastic moduli.
+\[
+[\sigma] = Nm^{-2} = Pa
+\]
+\[
+[\nu] = 1
+\]
+\[
+[G], [\lambda], [E]= Pa
+\]
+
+Pull a block of elastic object in the $x$-direction, expected stress in block is
+\[
+\sigma_{11} = \sigma, \sigma_{ij} = 0 \text{ otherwise}
+\]
+\[
+e_{11} = \frac 1 E ((\nu+1)\sigma - \nu\sigma) = \sigma/E
+\]
+$E$ tells us how much stretch there is in the direction in which the force is applied.
+\[
+e_{22} = e_{33} = -\frac{\nu\sigma}{E}
+\]
+\[
+\frac{e_{22}}{e_{11}} = -\nu
+\]
+$\nu$ gives ratio of shrinkage in the perpendicular direction to stretch in direction parallel of forces.
+
+\[
+-1\leq\nu\leq \frac 1 2
+\]
+$\nu = \frac 1 2 $ perfectly preserves volume. 
+
+Now in a different scenario, apply forces in $x$ and $y$-direction.
+
+\[
+\sigma_{11}  = \sigma_1, \sigma_{22} = \sigma_2
+\]
+\[
+e_{11} = \frac 1 E ((\nu+1)\sigma_1 - \nu(\sigma_1 + \sigma_2))  = \frac 1 E (\sigma_1 - \nu\sigma_2)
+\]
+If $\nu>0$, then biaxial force $\sigma_2$ reduces stretch in the x-direction.
 
 
+Now shearing a block of object between two plates.
+\[
+\sigma_{12} = \tau
+\]
+\[
+\sigma_{12} = 2Ge_{12}
+\]
+\[
+e_{12} = \sigma_{12}/2G = \tau/2G
+\]
+If plates are separated by $w$, and total shift is $\Delta x$, then 
+\[
+e_{12} = \frac 1 2 (\frac{\partial u }{\partial y } + \frac{\partial v}{\partial x} ) = \frac 1 2 \frac{ \Delta x }{ w} 
+\]
+\[
+ \frac{ \Delta x }{ w} = \frac \tau G
+\]
+\[
+G = \tau / (\frac{\Delta x }{w})
+\]
+G is the shear modulus.
 
+\subsection{PDEs of linear elastic bodies in equilibrium}
+Cauchy's law
+\[
+\bnabla\cdot\ssigma  + \FF = 0.
+\]
+Now 
+\[
+\ssigma = \lambda \bnabla\cdot\uu \mathds{1} + G(\bnabla\uu + (\bnabla\uu)^T)
+\]
+\[
+(\lambda + G)\bnabla(\bnabla\cdot \uu) + G\nabla^2\uu + \FF = 0
+\]
+This is called {\bf Navier's equation}.
 
+Modification for non-equilibrium.
+\[
+mass\times acceleration  =\int_V\FF\dx{V} + \int_{\partial V}\ssigma\cdot\nn\dx{S}
+\]
 
+\[
+\int_V\rho\frac{\partial^2 u}{\partial t^2} \dx{V} =\int_V\FF\dx{V} + \int_{\partial V}\ssigma\cdot\nn\dx{S}
+\]
+$\rho$ is mass per unit volume in the undeformed state.
+\[
+\int_V\rho\frac{\partial^2 u}{\partial t^2} \dx{V} = (\lambda + G)\bnabla(\bnabla\cdot \uu) + G\nabla^2\uu + \FF .
+\]
+This is a wave equation.
 
+Assume $\FF=0$ and the body is in equilibrium. take divergence
+\[
+(\lambda + G)\bnabla^2(\bnabla\cdot \uu) + G\nabla^2(\nabla\cdot\uu)=0
+\]
+\[
+\Rightarrow \nabla^2(\nabla\cdot\uu)=0
+\]
+So $e_{kk}$ is a harmonic function.
+\[
+\Rightarrow \sigma_{kk} = (3\lambda + 2G)e_{kk}
+\]
+So $\sigma_{kk}$ is also harmonic.
 
+Also take $\nabla^2$ on Navier's equation, $\nabla^2(\nabla^2\uu)=0$, so $\nabla^4\uu=0$. i.e. $\uu$ is {\bf biharmonic}. 
 
+\subsubsection{}
+The Navier equation has a unique solution in a domain $\Omega$, if $\uu$ is specified on the boundary $\partial\Omega$, or if $\partial \Omega$ can be disjointly partitioned into $\partial\Omega_u$ ($\uu$ is speficied) \& $\partial \Omega_F$ ($\ssigma\cdot\nn$ are specified).
 
+Recall Helmholtz's theorem, exists $\phi$ and $\bA$ such that
+\[
+\uu = \bnabla\phi + \bnabla\times\bA
+\]
+\[
+e_{kk} = \nabla\cdot\uu = \nabla^2\phi
+\]
+\[
+\nabla\times\uu =  \bnabla\times(\bnabla\times\bA) = -\nabla^2\bA
+\]
+If $\nabla\times\uu=0$, then we say $\uu$ is irrotational. i.e. $\uu = \bnabla\phi$ (ansatz).
 
+Consider a spherical capsule, with a difference in pressure between interior and exterior. Calculate the deformation. Assume spherical symmetric deformation. Define spherical polar coordinates $(r, \theta, \phi)$
+\[
+\uu = u(r)\ee_r.
+\]
+Assume there is a potential $\phi(r)$ with $\uu = \nabla\phi$.
+At $r = a$, 
+\[
+-\ssigma\cdot\ee_r = \Delta p \ee_r
+\]
+\[
+\sigma_{rr} = -\Delta p , \sigma_{r\theta} =\sigma_{r\phi}= 0
+\]
+\[
+\ssigma\cdot\ee_r =  -  p_{outer} \ee_r
+\]
 
-
-
+Navier's equations and $\uu = \nabla\phi$,
+\[
+\bnabla(\nabla^2\phi)=0.
+\]
+\[
+\nabla^2\phi= A
+\]
+for some constant $A$.
+\[
+\frac{1}{r^2\sin\theta}\frac{\partial}{\partial r}(r^2\sin\theta\frac{\partial\phi}{\partial r})= A.
+\]
+\[
+\frac{1}{r^2}\frac{\partial}{\partial r}(r^2\frac{\partial\phi}{\partial r})= A.
+\]
+\[
+r^2\frac{\partial\phi}{\partial r} = Ar^3 + B
+\]
+\[
+\phi(r) = Ar^2 + B/r + C
+\]
 
 
 
