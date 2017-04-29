@@ -1,0 +1,259 @@
+%
+\documentclass[12pt]{article}
+% geometry
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,letterpaper]{geometry}
+\usepackage{listings}
+%\usepackage{algorithm,algorithmic}
+\usepackage{amssymb,amsmath}
+\usepackage{dsfont}
+\usepackage{url}
+\usepackage[lined,ruled,linesnumbered]{algorithm2e}
+\lstset{language=Python}          % Set your language (you can change the language for each code-block optionally)
+
+\usepackage[usenames]{color}
+\usepackage[color,final]{showkeys}
+\definecolor{refkey}{gray}{0.8}
+\definecolor{labelkey}{gray}{0.8}
+
+\usepackage[normalem]{ulem}
+\newcommand{\remove}[1]{{\color{Gray}\sout{#1}}}
+\newcommand{\comm}[1]{{\color{red}(#1)}}
+\newcommand{\revise}[1]{{\color{blue}#1}}
+
+
+\usepackage[utf8]{inputenc}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+\newcommand{\xx}{{\bf x}}  
+\newcommand{\bb}{{\bf b}} 
+\newcommand{\ba}{{\bf a}} 
+\newcommand{\bc}{{\bf c}} 
+\newcommand{\ee}{{\bf e}} 
+\newcommand{\ff}{{\bf f}} 
+\newcommand{\nn}{{\bf n}} 
+\newcommand{\rr}{{\bf r}} 
+\newcommand{\uu}{{\bf u}} 
+\newcommand{\vv}{{\bf v}} 
+\newcommand{\FF}{{\bf F}} 
+\newcommand{\bA}{{\bf A}} 
+\newcommand{\bB}{{\bf B}} 
+\newcommand{\bC}{{\bf C}} 
+\newcommand{\bE}{{\bf E}} 
+\newcommand{\bS}{{\bf S}} 
+\newcommand{\bX}{{\bf X}} 
+\newcommand{\bT}{{\bf T}} 
+
+
+\newcommand{\bnabla}{{\bf \nabla}} 
+
+\newcommand{\kk}{{\underline{\underline{k}}}} 
+\newcommand{\cc}{{\underline{\underline c}}} 
+\newcommand{\ssigma}{{\underline{\underline \sigma}}} 
+\newcommand{\te}{{\underline{\underline e}}} 
+\newcommand{\ta}{{\underline{\underline a}}} 
+
+\newcommand{\RR}{{\mathbb R}}  
+\newcommand{\EE}{{\mathbb E}}  
+
+\newcommand{\GG}{{\mathcal G}}  
+\newcommand{\LL}{{\mathcal L}} 
+\newcommand{\UU}{{\mathcal U}} 
+\newcommand{\cF}{{\mathcal F}} 
+
+\newcommand{\dV}{{\text{d}V}} 
+\newcommand{\dS}{{\text{d}S}} 
+
+\newcommand{\Var}{\text{Var}}  
+\newcommand{\std}{\text{std}}  
+
+\newcommand{\pr}{{\partial}}  
+
+
+\newcommand{\lambdat}{{\bf \lambda}}
+\newcommand{\mx}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\dx}[1]{\text{ d}#1}
+
+
+\begin{document}
+
+\title{Math 272A Homework 1 Spring 2017}
+\author{Chuyuan Fu}
+\date{}
+
+\maketitle
+
+\section{Exercise 1}
+\subsection{}
+\begin{align*}
+\bnabla\cdot(\phi\ba) &= \frac{\pr}{\pr x_i} (\phi a_i) \\
+	&= \frac{\pr \phi}{\pr x_i} a_i + \phi\frac{\pr a_i}{\pr x_i} \\
+	&= \ba \cdot \bnabla\phi +\phi \bnabla\cdot\ba
+\end{align*}
+
+
+\subsection{}
+\begin{align*}
+\bnabla\times(\phi\ba) &=\ee_i\epsilon_{ijk}\frac{\pr}{\pr x_j} (\phi a_k)\\
+	 &=\ee_i\epsilon_{ijk} (\frac{\pr \phi}{\pr x_j}  a_k   + \phi \frac{\pr a_k}{\pr x_j})\\
+	&= (\bnabla\phi)\times\ba +\phi \bnabla\times\ba
+\end{align*}
+
+
+\subsection{}
+\begin{align*}
+\bnabla\cdot(\bnabla\times\ba) &= \frac{\pr}{\pr x_i}(\epsilon_{ijk}\frac{\pr a_k}{\pr x_j} )\\
+	&= \epsilon_{ijk}\frac{\pr^2 a_k}{\pr x_i\pr x_j}\\
+	&= -\epsilon_{jik}\frac{\pr^2 a_k}{\pr x_i\pr x_j}\\
+	&= -\epsilon_{jik}\frac{\pr^2 a_k}{\pr x_j\pr x_i}\\
+	&= -\epsilon_{ijk}\frac{\pr^2 a_k}{\pr x_i\pr x_j}\\
+	&=0
+\end{align*}
+
+
+\subsection{}
+\begin{align*}
+\bnabla\times(\bnabla\phi) &=  \ee_i\epsilon_{ijk}\frac{\pr}{\pr x_j} (\frac{\pr \phi}{\pr x_k})\\
+ &=  - \ee_i\epsilon_{ikj}\frac{\pr}{\pr x_j} (\frac{\pr \phi}{\pr x_k})\\
+ &= - \ee_i\epsilon_{ikj}\frac{\pr}{\pr x_k} (\frac{\pr \phi}{\pr x_j})\\
+&= {\bf 0}
+\end{align*}
+
+\subsection{}
+\begin{align*}
+\bnabla\times(\ba\times\bb)&= \epsilon_{ijk} \frac{\pr}{\pr x_j} (\epsilon_{klm}a_lb_m)\\
+	&=\epsilon_{kij}\epsilon_{klm} \frac{\pr}{\pr x_j} (a_lb_m)\\
+	&= (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}) (\frac{\pr a_l}{\pr x_j}b_m + a_l\frac{\pr b_m}{\pr x_j})\\
+	&= \frac{\pr a_i}{\pr x_m}b_m  - \frac{\pr a_j}{\pr x_j}b_i + a_i\frac{\pr b_j}{\pr x_j} - a_j\frac{\pr b_i}{\pr x_j}\\
+	&= \bb\cdot\bnabla\ba - \bb(\bnabla\cdot\ba) +  \ba(\bnabla\cdot\bb) - \ba\cdot\bnabla\bb
+\end{align*}
+
+\subsection{}
+\begin{align*}
+\bnabla\cdot(\ba\times\bb) &= \frac{\pr}{\pr x_i}(\epsilon_{ijk} a_jb_k)\\
+		&= \epsilon_{ijk}  \frac{\pr a_j}{\pr x_i} b_k +  \epsilon_{ijk}  \frac{\pr b_k}{\pr x_i} a_j\\
+		&= \epsilon_{kij}  \frac{\pr a_j}{\pr x_i} b_k -  \epsilon_{jik}  \frac{\pr b_k}{\pr x_i} a_j\\
+		&= \bb\cdot(\bnabla\times\ba)  - \ba\cdot(\bnabla\times\bb)
+\end{align*}
+
+
+\subsection{}
+\begin{align*}
+\nabla\cdot(\ba\bb) &= \frac{\pr}{\pr x_i}a_ib_j \ee_j\\
+	&= \frac{\pr a_i}{\pr x_i}b_j \ee_j +  a_i\frac{\pr b_j}{\pr x_i}\ee_j\\
+	&= (\bnabla\cdot\ba)\bb + (\ba\cdot\bnabla)\bb
+\end{align*}
+
+
+\subsection{}
+\begin{align*}
+\bnabla\times(\bnabla\times\ba) &= \ee_i\epsilon_{ijk}\frac{\pr}{\pr x_j}\epsilon_{klm}\frac{\pr a_m}{\pr x_l}\\
+&= \ee_i\epsilon_{kij}\epsilon_{klm}\frac{\pr^2 a_m}{\pr x_lx_j}\\
+&= \ee_i(\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})\frac{\pr^2 a_m}{\pr x_lx_j}\\
+&= \frac{\pr^2 a_j}{\pr x_ix_j}\ee_i - \frac{\pr^2 a_i}{\pr x_jx_j}\ee_i\\
+&= \bnabla(\bnabla\cdot\ba) - \nabla^2\ba
+\end{align*}
+
+\section{Exercise 2}
+\subsection{}
+\begin{align*}
+\int_S\nn\dx{S} &= \int_S\ee_i n_i\dx{S} \\
+&=\int_V \ee_i\frac{\pr 1}{\pr x_i}\dx{V}\\
+&= {\bf 0}
+\end{align*}
+
+
+\subsection{}
+\begin{align*}
+\int_S (\xx\times\ba)\times\nn\dx{S} &= \int_S\ee_i \epsilon_{ijk} (\epsilon_{jlm} x_la_m) n_k\dx{S}\\
+	&=\int_S\ee_i \epsilon_{jki} \epsilon_{jlm} x_la_m n_k\dx{S}\\
+	&=\int_S\ee_i (\delta_{kl}\delta_{im} - \delta_{km}\delta_{il}) x_la_mn_k\dx{S}\\
+	&= \int_S\ee_i (x_ka_i - x_ia_k)n_k\dx{S}\\
+	&= \int_V \ee_ia_i\frac{\pr x_k}{\pr x_k} - \ee_i\int \frac{\pr (x_ia_k)}{\partial x_k} \dx{V} \\
+	&= \int_V 3\ba\dx{V} - \ee_i\int_V \delta_{ik}a_k \dx{V}\\
+	& = 2V\ba
+\end{align*}
+
+\subsection{}
+\begin{align*}
+\int_C\phi\bnabla\phi\cdot\dx{\xx} &= \frac 1 2 \int_C\frac{\pr \phi^2}{\pr x_i}\dx{x_i}\\	
+	&=0
+\end{align*}
+
+\section{Exercise 3}
+\subsection{}
+\[
+\ba\bb\bc_{121} = 1 \quad \ba\bb\bc_{123} = 1 \quad  \ba\bb\bc_{221} = -1  \quad  \ba\bb\bc_{223} = -1
+\]
+\[
+\ba\bb\bc_{131} = -1 \quad \ba\bb\bc_{133} = -1 \quad  \ba\bb\bc_{231} = 1  \quad  \ba\bb\bc_{233} = 1
+\]
+
+\subsection{}
+\[
+u_i' = l_{ik}u_k
+\]
+\[
+x_j' = l_{jm}x_m
+\]
+\[
+\Rightarrow\frac{\pr u_i'}{\pr x_j'} = l_{ik}\frac{\pr u_k}{\pr x_m}l_{jm} =  l_{ik}l_{jm} \frac{\pr u_k}{\pr x_m}
+\]
+
+
+\subsection{}
+\[
+\sigma_{ij}' = l_{ik}l_{jm}\sigma_{km}
+\]
+\[
+x_j' = l_{jn}x_n
+\]
+\[
+\Rightarrow\frac{\pr \sigma_{ij}' }{\pr x_j'} = l_{ik}l_{jm}l_{jn}\frac{\pr \sigma_{km}}{\pr x_n} = l_{ik}\delta_{mn}\frac{\sigma_{km}}{\pr x_n} = l_{ik}\frac{\sigma_{km}}{\pr x_m} 
+\]
+
+\subsection{}
+\[
+A_{ij}'  = l_{ik} l_{jl}A_{kl}
+\]
+\[
+\Rightarrow A_{ii}' =   l_{ik} l_{il}A_{kl} = \delta_{kl} A_{kl} = A_{kk}
+\]
+\[
+A_{ji}'  = l_{jm} l_{in}A_{mn}
+\]
+\[
+\Rightarrow A_{ij}'A_{ji}' = l_{ik} l_{jl}A_{kl}l_{jm} l_{in}A_{mn} = \delta_{kn}\delta_{lm}A_{kl}A_{mn} = A_{nm}A_{mn}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
