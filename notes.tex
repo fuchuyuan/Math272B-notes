@@ -56,7 +56,6 @@
 \newcommand{\bX}{{\bf X}} 
 \newcommand{\bT}{{\bf T}} 
 
-
 \newcommand{\bnabla}{{\bf \nabla}} 
 
 \newcommand{\kk}{{\underline{\underline{k}}}} 
@@ -511,7 +510,7 @@ mass $\times$ acceleration $O(L^3)$= sum of traction forces $O(L^2)$ $+$ body fo
 \]
 Similarly for other faces. By force balance:
 \[
-\bT_{\nn}\dS + \bT_{-\ee_z}n_z\dS +\bT_{-\ee_y}n_y\dS +\bT_{-\ee_x}n_x\dS,
+\bT_{\nn}\dS + \bT_{-\ee_z}n_z\dS +\bT_{-\ee_y}n_y\dS +\bT_{-\ee_x}n_x\dS = 0,
 \]
 so 
 \[
@@ -613,14 +612,12 @@ It is useful to rewrite in terms of displacement:
 \uu = \xx - \bX
 \]
 \[
-e_{jk} = \frac 1 2 ( \frac{\partial u_j}{\partial x_k}  +  \frac{\partial u_k}{\partial x_j} -  \frac{\partial u_k}{\partial x_j} \frac{\partial u_k}{\partial x_k}      )
+e_{jk} = \frac 1 2 ( \frac{\partial u_i}{\partial X_j} \frac{\partial u_i}{\partial X_k} +  \frac{\partial u_j}{\partial X_k}  +\frac{\partial u_k}{\partial X_j}  )
 \]
 
 \[
-E_{jk} = \frac 1 2 ( \frac{\partial u_j}{\partial X_k}  +  \frac{\partial u_k}{\partial X_j} -  \frac{\partial u_k}{\partial X_j} \frac{\partial u_k}{\partial X_k}      )
+E_{jk} = \frac 1 2 ( \frac{\partial u_k}{\partial x_j}  +  \frac{\partial u_j}{\partial x_k}  - \frac{\partial u_i}{\partial x_j} \frac{\partial u_i}{\partial x_k}      )
 \]
-Those of you reading this note, why is this straight forward to see??  Please add notes here !!! thanks!!!
-
 
 
 \section{Linear Elasticity}
@@ -631,9 +628,9 @@ E_{ij} \approx e_{ij} \approx \frac 1 2 (\frac{\partial u_i}{\partial x_j} + \fr
 
 This is called Cauchy's infinitesimal strain tensor.
 
-Interpretation. Consider a line element aligned with the x-axis. Line element change in length is 
+Interpretation. Consider a line element aligned with the x-axis. We will see that line element change in length is 
 \[
-ds^2 - dS^2 = 2 e_{xx}dX^2
+ds^2 - dS^2 = 2 e_{xx}dX^2.
 \]
 Write
 \[
@@ -739,11 +736,12 @@ We can reduce the number of free components further by making an additional assu
 Calculate total elastic energy stored in a control volume V, when body is deformed. $\ssigma$ and $\FF$ are ramped up slowly from 0 to $\ssigma^*$, $\FF^*$. Work done in increasing forces 
 \begin{align*}
 \dx{U} &= \int_V \FF\cdot\dx{\uu} \dx{V} + \int_{\partial V} \dx{u}\cdot \ssigma\cdot\nn\dx{S}\\
-&= \int_V \FF\cdot\dx{\uu} + \nabla\cdot (dx{\uu}\cdot \ssigma) \dx{V} \\
-&= \int_V \FF\cdot\dx{\uu} + \dx{\uu}\cdot(\nabla\cdot\ssigma^T + \nabla\dx{\uu}:\ssigma)\dx{V}\\
+&= \int_V \FF\cdot\dx{\uu} + \nabla\cdot (\dx{\uu}\cdot \ssigma) \dx{V} \\
+&= \int_V \FF\cdot\dx{\uu} + \dx{\uu}\cdot(\nabla\cdot\ssigma^T) + \nabla\dx{\uu}:\ssigma\dx{V}\\
 &= \dx{e_{ij}}\sigma_{ij} 
 \end{align*}
-where $\dx{\te} = \frac 1 2 (\nabla\dx{\uu} + (\nabla\dx{\uu} )^T)$.
+where $\dx{\te} = \frac 1 2 (\nabla\dx{\uu} + (\nabla\dx{\uu} )^T)$. The first two terms vanish by force balance, the third terms reduces by symmetry of $\ssigma$.
+
 \[
 dU = \int_V\sigma_{ij}\dx{e_{ij}}dV
 \]
@@ -784,14 +782,21 @@ Most materials we study are isotropic. i.e.
 C_{ijkl} = \lambda \delta_{ij}\delta_{kl} + \mu \delta_{ik}\delta_{jl}  + \nu \delta_{il}\delta_{jk}
 \]
 for 3 coefficients $\lambda$, $\mu$, $\nu$.
-
-
-
+\[
+\Rightarrow \sigma_{ij}  = C_{ijkl}e_{kl} = \lambda \delta_{ij}e_{kk} + \mu e_{ij} + \nu e_{ji} := \lambda\delta_{ij}e_{kk} + 2Ge_{ij}
+\]
+$\lambda$ and $G$ are called {\bf Lame coefficients}. Now we want to express $\te$ in terms of $\ssigma$. 
+\[
+\sigma_{mm} = \lambda e_{kk} + 2G e_{mm}
+\]
+so
+\[
+e_{mm} = \frac {1}{\lambda + 2G} \sigma_{kk}
+\]
 \begin{align*}
 e_{ij} &= \frac{1}{2G} (\sigma_{ij} - \frac{\lambda\delta_{ij}\sigma_{kk}}{3\lambda+ 2 G})\\
 	&= \frac1 E ((\nu+1)\sigma_{ij} -\nu \sigma_{kk}\delta_{ij})\\
 \end{align*}
-
 E is called {\bf Young's modulus}.
 $\nu$ {\bf Poisson ratio}.
 $\lambda$, $G$, $E$ are all elastic moduli.
@@ -956,15 +961,192 @@ r^2\frac{\partial\phi}{\partial r} = Ar^3 + B
 
 
 
+$\sigma_{\theta\theta}$ and $\sigma_{\phi\phi}$ are known as hoop stresses. (see beam/elastic theory in this course.)
+
+\subsubsection{}
+In equilibrium
+\[
+\bnabla\cdot\ssigma + \FF = {\bf 0}.
+\]
+$\ssigma$ has 6 components, but  only have 3 equations.
+
+To get Cauchy's equation, we need to add a constitutive law
+\[
+\ssigma = \lambda e_{kk} \mathds 1 + 2G\te
+\]
+but
+\[
+\te = \frac 1 2 (\bnabla\uu + (\bnabla\uu)^T)
+\]
+In general (see homework \#2), $\te$ can be derived from a real displacement field iff the St. Venant compatibility conditions hold.
+\[
+e_{ij,kl} + e_{kl,ij} - e_{ik,jl} - e_{jl,ik}=0
+\]
+Recall
+\[
+e_{ij} = \frac{(1+nu)\sigma_{ij}}{E} - \frac{\nu\sigma_{kk}\delta_{ij}}{E}
+\]
+and substitute into the previous equation
+\[
+(1+\nu)(\sigma_{ij,kl} + \sigma_{kl,ij} - \sigma_{ik,jl} - \sigma_{jl,ik}) = \nu(\sigma_{mm,kl}\delta_{ij} + \sigma_{mm,ij}\delta_{kl} - \sigma_{mm,kl}\delta_{ik} - \sigma_{mm,kl}\delta_{jl} )
+\]
+Let $k=l$,
+\[
+(1+\nu)(\nabla^2\sigma_{ij} + \sigma_{mm,ij} - (\nabla\ssigma)_{i,j}  - (\nabla\ssigma)_{j,i} ) = \nu (\nabla^2\sigma_{mm,ij} + \sigma_{mm,ij})
+\]
+I have reduced S-V to 6 equations.
+\[
+\nabla^2\sigma_{ij} + \frac{1}{1+\nu}\sigma_{mm,ij} = \frac{-\nu}{1-\nu}(\bnabla\cdot\FF)\delta_{ij} - (F_{i,j}+ F_{j,i})
+\]
+Beltrami-Mitchell compatibility equations.
+If we take Cauchy's equation and add (the right) three of the Beltrami-Mitchell equations, we can calculate $\sigma_{ij}$ uniquely.
+
+
+Contract  $i=j$,
+\[
+(1+\nu)\nabla^2\sigma_{mm} + \nabla^2\sigma_{mm} - 3\nu\nabla^2\sigma_{mm} = -(1+\nu)2\bnabla\cdot\FF
+\]
+\[
+2(1-\nu)\nabla^2\sigma_{mm} = -2(1+\nu)\nabla\cdot\FF
+\]
+Example: consider a beam, ($\nn\cdot\ssigma$ on other surface.)
+
+boundary conditions are that $\sigma_{xx}   = \alpha z $ at the two ends of the beam.
+Solve in terms of the stress field.
+I assert that $\ssigma = \mx{\alpha z & 0 & 0\\ 0&0&0\\0&0&0}$ solves Cauchy's equilibrium and Beltrami-Mitchell and solves the b.c.s. 
+\[
+\bnabla\cdot \ssigma = \mx{\frac{\partial \sigma_{xx}}{\partial x}+ \frac{\partial \sigma_{yx}}{\partial y} + \frac{\partial \sigma_{zx}}{\partial z} \\...\\...} = 0.
+\]
+In absence of body forces, B-M is satisfied.
+
+\[
+\te = \frac{1+\nu}{E}\ssigma - \frac{\nu\sigma_{kk}}{E}\mathds 1 
+\]
+\[
+e_{xx} = \frac{\sigma_{xx}}{E} = \frac{\alpha z}{E}
+\]
+while $e_{zx}=0$, right angles remain right angles; so beam bends into the arc of a circle. center line (surface $z=0$) is unstreched by bending. at distance $h$ from the center line, the surface is stretched by factor of $\frac{\alpha h}{E}$. If initial length of beam is $L$, then
+\[
+R\theta = L
+\]
+\[
+(R+h)\theta = (1+\alpha h/E)L
+\]
+\[
+\Rightarrow R = \frac E \alpha
+\]
+Let's assume no net force is being applied.
+\[
+\int_{cross-section} \sigma_{xx}\dx{A}=0
+\]
+\[
+\Rightarrow \int z \dx{A} = 0
+\]
+$z=0$ must pass through the beam centroid. Call $z=0$ the {\bf neutral surface}.
+Define a moment of force,
+\[
+M = \int_{cross-section} z\sigma_{xx}\dx{A} = \alpha \int_{cross-section}z^2\dx{A}:= \alpha I
+\]
+\[
+R = \frac{E}{M/I}
+\]
+\[
+M = EI/R
+\]
 
 
 
 
 
+\subsection{Plane strain \& plane stress}
+There are two types of 2D elasticity problem. Thick samples under forces that are homogeneous in $z$ and are oriented in $x$, $y$ plane. Then
+\[
+\frac{\partial}{\partial z}=0,
+\]
+and 
+\[
+w=0,
+\]
+where $\uu = (u,v,w)$.
+Cauchy's equation
+\[
+\sigma_{xx,x} + \sigma_{xy,y} =-F_x
+\] 
+\[
+\sigma_{xy,x} + \sigma_{yy,y} =-F_y
+\] 
 
+\[
+e_{zz} = 0 \Rightarrow \sigma_{zz} = \nu(\sigma_{xx} + \sigma_{yy})
+\]
 
+St. Venant compatibility equations are 
+\[
+e_{xx,yy} + e_{yy,xx} - 2e_{xy,xy}=0
+\]
+\[
+e_{xx} = \frac{1+\nu}{E} (\sigma_{xx}-\nu(\sigma_{xx} + \sigma_{yy} ))
+\]
+\[
+e_{yy} = \frac{1+\nu}{E} (\sigma_{yy}-\nu(\sigma_{xx} + \sigma_{yy} ))
+\]
+\[
+e_{xy} = \frac{1+\nu}{E}\sigma_{xy}
+\]
+Plug in,
+\[
+(1-\nu)\sigma_{xx,yy} - \nu\sigma_{yy,yy} + (1-\nu)\sigma_{yy,xx}-\nu\sigma_{xx,xx} = 2\sigma_{xy,xy}
+\]
+From Cauchy's equations,
+\[
+2\sigma_{xy,xy} = -\nabla\cdot\FF - \sigma_{xx,xx}-\sigma_{yy,yy}.
+\]
+\[
+\sigma_{xx,yy} + \sigma_{yy,yy}  + \sigma_{yy,xx}  + \sigma_{xx,xx} = -\frac{\nabla\cdot\FF}{1-\nu} 
+\]
+Use notation
+\[
+\nabla_H^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}
+\]
+\[
+\nabla_H^2 (\sigma_{xx}+\sigma_{yy})= -\frac{\nabla\cdot\FF}{1-\nu} 
+\]
 
-
+\subsection{Plane stress}
+Consider a very thin object (plate) to which only in plane forces are applied.
+Unsupportd faces, on faces $z=+-h$,
+\[
+\sigma_{xz} = \sigma_{yz} = \sigma_{zz}=0.
+\]
+Center surface (at $z=0$) has no $w$ displacement. Characteristic stress in $x, y$ plane is $\Sigma$.
+\[
+\sigma_{xx}, \sigma_{xy}, \sigma_{xz}\approx \Sigma 
+\]
+\[
+\sigma_{xx,x} +  \sigma_{xy,y}+  \sigma_{xz,z} = - \FF 
+\]
+\[
+\sigma_{xz,z} \approx \frac{\sigma_{xz}}{h},\quad  \sigma_{xz}\approx \frac h L \Sigma
+\]
+\[
+\sigma_{xx,x} \approx \frac{\Sigma}{h}
+\]
+\[
+u = u^0 (x,y) + z u^1 (x,y) + z^2 u^2(x,y)
+\]
+\[
+w = zw^2(x,y)
+\]
+\[
+\te = \te^0 + z\te^1+\cdots
+\]
+where 
+\[
+\te^0 = \mx{ u^0_{,x} & \frac1  2 (u^0_{,y} + v^0_{,x}) & \frac 1 2 u^1\\
+& v^0_{,y} & \frac 1 2 v^1\\
+& & w^1
+}
+\]
 
 
 
