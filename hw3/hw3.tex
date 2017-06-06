@@ -1,0 +1,314 @@
+%
+\documentclass[12pt]{article}
+% geometry
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,letterpaper]{geometry}
+\usepackage{listings}
+%\usepackage{algorithm,algorithmic}
+\usepackage{amssymb,amsmath}
+\usepackage{dsfont}
+\usepackage{url}
+\usepackage[lined,ruled,linesnumbered]{algorithm2e}
+\lstset{language=Python}          % Set your language (you can change the language for each code-block optionally)
+
+\usepackage[usenames]{color}
+\usepackage[color,final]{showkeys}
+\definecolor{refkey}{gray}{0.8}
+\definecolor{labelkey}{gray}{0.8}
+
+\usepackage[normalem]{ulem}
+\newcommand{\remove}[1]{{\color{Gray}\sout{#1}}}
+\newcommand{\comm}[1]{{\color{red}(#1)}}
+\newcommand{\revise}[1]{{\color{blue}#1}}
+
+
+\usepackage[utf8]{inputenc}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+\newcommand{\xx}{{\bf x}}  
+\newcommand{\bb}{{\bf b}} 
+\newcommand{\ba}{{\bf a}} 
+\newcommand{\bc}{{\bf c}} 
+\newcommand{\ee}{{\bf e}} 
+\newcommand{\ff}{{\bf f}} 
+\newcommand{\nn}{{\bf n}} 
+\newcommand{\rr}{{\bf r}} 
+\newcommand{\uu}{{\bf u}} 
+\newcommand{\vv}{{\bf v}} 
+\newcommand{\FF}{{\bf F}} 
+\newcommand{\bA}{{\bf A}} 
+\newcommand{\bB}{{\bf B}} 
+\newcommand{\bC}{{\bf C}} 
+\newcommand{\bE}{{\bf E}} 
+\newcommand{\bS}{{\bf S}} 
+\newcommand{\bX}{{\bf X}} 
+\newcommand{\bT}{{\bf T}} 
+
+
+\newcommand{\bnabla}{{\bf \nabla}} 
+\newcommand{\btheta}{{\mathbf \theta}} 
+
+\newcommand{\kk}{{\underline{\underline{k}}}} 
+\newcommand{\cc}{{\underline{\underline c}}} 
+\newcommand{\ssigma}{{\underline{\underline \sigma}}} 
+\newcommand{\te}{{\underline{\underline e}}} 
+\newcommand{\ta}{{\underline{\underline a}}} 
+
+\newcommand{\RR}{{\mathbb R}}  
+\newcommand{\EE}{{\mathbb E}}  
+
+\newcommand{\GG}{{\mathcal G}}  
+\newcommand{\LL}{{\mathcal L}} 
+\newcommand{\UU}{{\mathcal U}} 
+\newcommand{\cF}{{\mathcal F}} 
+
+\newcommand{\dV}{{\text{d}V}} 
+\newcommand{\dS}{{\text{d}S}} 
+
+\newcommand{\Var}{\text{Var}}  
+\newcommand{\std}{\text{std}}  
+
+\newcommand{\pr}{{\partial}}  
+
+
+\newcommand{\lambdat}{{\bf \lambda}}
+\newcommand{\mx}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\dx}[1]{\text{ d}#1}
+
+ 
+\begin{document}
+
+\title{Math 272A Homework 3 Spring 2017}
+\author{Chuyuan Fu}
+\date{}
+
+\maketitle
+
+\section{Exercise 1}
+\subsection{}
+\subsubsection{plane strain}
+We assume plane strain, so $\bnabla\uu$ is
+\[
+\bnabla \uu = \mx{\frac{\pr u}{\pr x} &\frac{\pr v}{\pr x} & 0\\
+  \frac{\pr u}{\pr y} &\frac{\pr v}{\pr y} & 0\\
+  0 & 0 &0
+}
+\]
+Recall Cauchy's equation:
+\[
+\sigma_{xx,x} + \sigma_{xy,y} = -F_x
+\]
+\[
+\sigma_{yx,x} + \sigma_{yy,y} = -F_y
+\]
+\[
+\sigma_{zx} = \sigma_{zy} = 0, \sigma_{zz,z} = 0 \text{ is automatically satisfied}
+\]
+Substitute in
+\[
+\ssigma = \lambda \bnabla\cdot\uu {\mathds 1} + G(\nabla \uu +(\nabla \uu)^T), 
+\]
+we get the Navier's equation: 
+\[
+(2G + \lambda)u_{,xx} + Gu_{,yy} + (G+\lambda)v_{,xy} = -F_x
+\]
+\[
+(2G + \lambda)v_{,xx} + Gv_{,yy} + (G+\lambda )u_{,xy} = -F_y
+\]
+\[
+w=0
+\]
+In 2D,  $\uu = (u,v)$, we get the Navier's equation in 2D:
+\[
+(\lambda + G)\nabla(\nabla\cdot\uu) + G \nabla^2\uu=0.
+\]
+
+
+\subsubsection{plane stress}
+In plane stress,
+\[
+w^{(1)} = -\frac{\lambda}{\lambda + 2G}(u_{,x}^{(0)} + v_{,y}^{(0)})
+\]
+Substitute into Cauchy's equation, we get
+\[
+(2G + \lambda - \frac{\lambda^2}{2G+\lambda})u_{,xx} + Gu_{,yy} + (G+\lambda - \frac{\lambda^2}{2G+\lambda})v_{,xy} = -F_x
+\]
+\[
+(2G + \lambda- \frac{\lambda^2}{2G+\lambda})v_{,xx} + Gv_{,yy} + (G+\lambda- \frac{\lambda^2}{2G+\lambda})u_{,xy} = -F_y
+\]
+In 2D,  $\uu = (u,v)$, we get the Navier's equation in 2D:
+\[
+(\lambda + G- \frac{\lambda^2}{2G+\lambda})\nabla(\nabla\cdot\uu) + G \nabla^2\uu=0.
+\]
+
+
+\subsection{}
+Assume that $u_{\theta} = rf(\theta)$, $u_r = h(r)$,
+\begin{align*}
+  \nabla \cdot\uu &= \frac 1 r \frac{\pr}{\pr r} (ru_r) + \frac 1 r \frac{\pr}{\pr \theta}u_{\theta} \\
+  &=\frac h r + h' + f'
+\end{align*}
+
+\begin{align*}
+  \bnabla (\nabla \cdot\uu) &= \frac{\pr}{\pr r} (\nabla\cdot\uu)\hat\rr + \frac 1 r \frac{\pr}{\pr \theta}(\nabla\cdot\uu)\hat{\btheta} \\
+  &=(h'' + \frac{h'}{r} - \frac{h}{r^2})\hat\rr + \frac 1 r f''\hat\btheta
+\end{align*}
+\[
+  \nabla^2 \uu = (\nabla^2u_r - \frac{u_r}{r^2} - \frac{2}{r^2} \frac{\pr u_{\theta}}{\pr {\theta}}) \hat \rr + (\nabla^2 u_{\theta} - \frac{u_{\theta}}{r^2} +
+  \frac{2}{r^2}\frac{\pr u_r}{\pr \theta})\hat \theta
+\]
+\begin{align*}
+  \nabla^2u_r &= \frac 1 r \frac{\pr}{\pr r} (r\frac{\pr u_r}{\pr r}) + \frac{1}{r^2}\frac{\pr^2 u_r}{\pr \theta^2}\\
+  &=\frac 1 r \frac{\pr}{\pr r} (rh')\\
+  &=\frac 1 r h' + h''
+\end{align*}
+\begin{align*}
+  \nabla^2u_{\theta} &= \frac 1 r \frac{\pr}{\pr r} (r\frac{\pr u_r}{\pr r}) + \frac{1}{r^2}\frac{\pr^2 u_r}{\pr \theta^2}\\
+  &= \frac 1 r (h' + rh'')\\
+  &= \frac 1 r h' + h''
+\end{align*}
+Substitute the above expressions into 2D Navier's equation, we get
+\begin{equation}
+  (\lambda+ 2G)(h'' + \frac{h'}{r} - \frac{h}{r^2}) = \frac{2G}{r}f'
+\end{equation}
+\begin{equation}
+  f''=0
+\end{equation}
+
+
+
+
+\section{Exercise 2}
+\subsection{}
+Let's first consider the boundary conditions for the probolem. At $x=a$, no external traction exists, so
+\[
+\sigma_{rr} = \sigma _{r\theta}=0.
+\]
+As $r\to\infty$, Mohr's circles gives that
+\begin{align*}
+ & \sigma_{rr} = \frac \sigma 2(1+\cos2\theta)\\
+ & \sigma_{\theta\theta} = \frac \sigma 2(1-\cos2\theta)\\
+ & \sigma_{r\theta} = \frac \sigma 2\sin2\theta
+\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Exercise 3}
+From lecture, we know that the Airy's stress function is
+\[
+\Phi = Frf(\theta),
+\]
+where
+\[
+f(\theta) = a\cos\theta + b\sin\theta + c\theta\cos\theta + d\theta\sin\theta.
+\]
+WLOG we can assume that $a = b = 0$ (since $r\cos\theta = x$, $r\sin\theta = y$ does not contribute to stress).
+\[
+\sigma_{\theta\theta} = \frac{\pr^2 \Phi}{\pr r^2} =0
+\]
+\[
+\sigma_{r\theta} = \frac {1}{ r^2} \frac{\pr \Phi}{\pr \theta} -\frac{1}{r} \frac{\pr^2 \Phi}{\pr \theta\pr r} = \frac{F}{r}(f' - f')=0
+\]
+\[
+\sigma_{rr} = \frac 1 r \frac{\pr \Phi}{\pr r} +\frac{1}{r^2} \frac{\pr^2 \Phi}{\pr \theta^2} =\frac{F}{r}(f+f'')  = \frac F r(2c\sin\theta + 2d\cos\theta)
+\]
+By zero contraction on the boundary,
+\[
+F\ee_y +\int\sigma_{rr}\ee_r \dx{S} = 0
+\]
+\[
+F\ee_y +\frac F r\int_{-\frac \pi 2}^{\frac \pi 2}(-2c\sin\theta + 2d\cos\theta)\mx{\cos\theta \\ \sin\theta} r\dx{S} = 0
+\]
+This integration gives that
+\[
+d=0, c = \frac 1 \pi.
+\]
+The Airy stress function is
+\[
+\Phi = Fr\frac 1 \pi \theta\cos\theta.
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
