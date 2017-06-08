@@ -194,29 +194,64 @@ Substitute the above expressions into 2D Navier's equation, we get
 
 \section{Exercise 2}
 \subsection{}
-Let's first consider the boundary conditions for the probolem. At $x=a$, no external traction exists, so
+Let's for now ignore the $\sigma_{\infty}$ constant and add it in at the end. The uniaxial tension part of Airy's stress function is
 \[
-\sigma_{rr} = \sigma _{r\theta}=0.
+\Phi_{\infty} = \frac{y^2}{2} =\frac{r^2\sin^2\theta}{2} = \frac{r^2(1-\cos2\theta)}{4}
 \]
-As $r\to\infty$, Mohr's circles gives that
+Now we need to add the pertubation part.
+Let's first consider the boundary conditions for the pertubation part. As $r\to\infty$,
+\[
+\sigma_{rr} \to 0,  \sigma_{r\theta} \to 0,  \sigma_{\theta\theta} \to 0.
+\]
+We look at the Michell solution and select terms that allow stress to vanish as $r\to\infty$, and only allow the solution to depend on $\theta$ in the form of $\cos2\theta$ by symmetry
+in the $y$-direction. The solution should be of the form
+\[
+\Phi_{perb} = A\ln r + (Br^{-2} + C)\cos2\theta
+\]
+At $x=a$, the total stress should satisfy
 \begin{align*}
- & \sigma_{rr} = \frac \sigma 2(1+\cos2\theta)\\
- & \sigma_{\theta\theta} = \frac \sigma 2(1-\cos2\theta)\\
- & \sigma_{r\theta} = \frac \sigma 2\sin2\theta
+ & \sigma_{rr} = 0\\
+ & \sigma_{r\theta} =0.
 \end{align*}
+By plugging into the boundary condition at $x=a$, 
+\[
+\sigma_{rr} = \frac{A}{a^2} - \frac{1}{a^2}\cos2\theta(\frac{6B}{a^2} + 4C) + \frac 1 2(1+\cos2\theta)=0
+\]
+\[
+\sigma_{r\theta} = -\frac{6B}{a^4}\sin2\theta - \frac{2C}{a^2}\sin2\theta - \frac 1 2 \sin2\theta=0
+\]
+We can solve for the coefficients
+\[
+A = -\frac{a^2}{2}, B = -\frac{a^4}{4}, C = \frac{a^2}{2}.
+\]
+The Airy's stress function is
+\[
+\Phi = \Phi_{\infty} + \Phi_{perb} = \sigma_{\infty} (-\frac{a^2}{2} \ln r -\frac{a^4\cos2\theta}{4r^2} + \frac{a^2}{2}\cos2\theta+ \frac{r^2}{4}(1-\cos2\theta))
+\]
+The tensile stress $\sigma_{\theta\theta}$ around $r=a$ is
+\[
+\sigma_{\theta\theta} \rvert_{r=a}= \frac{\pr^2}{\pr r^2} \Phi\rvert_{r=a}  = \sigma_{\infty}(1-2\cos2\theta)
+\]
+The maximum tensible stress is $3\sigma_{\infty}$.
 
 
-
-
-
-
-
-
-
-
-
-
-
+\subsection{}
+\[
+\sigma = \tau_{\infty}(\ee_1\ee_2 + \ee_2 \ee_1) = -\tau_{\infty}\ee_1'\ee_1'+ \tau_{\infty}\ee_2'\ee_2'
+\]
+where
+\[
+\ee_1' = -\frac{\sqrt 2}{2}\ee_1 + \frac{\sqrt 2}{2}\ee_2, 
+\]
+\[
+\ee_2' = \frac{\sqrt 2}{2}\ee_1 + \frac{\sqrt 2}{2}\ee_2.
+\]
+We can see the plate as being under two uniaxial tension added together.
+The tensile stress $\sigma_{\theta\theta}$ around $r=a$ is
+\[
+\sigma_{\theta\theta} \rvert_{r=a}= -\tau_{\infty}(1-2\cos2\theta) + \tau_{\infty}(1-2\cos2(\theta+\frac \pi 2)) = 4\tau_{\infty}\cos 2\theta
+\]
+The largest tensile stress at the boundary of the hole is $4\tau_{\infty}$.
 
 
 
@@ -261,6 +296,7 @@ The Airy stress function is
 
 
 
+\section{Exercise 4}
 
 
 
@@ -288,6 +324,132 @@ The Airy stress function is
 
 
 
+
+
+
+
+
+\section{Exercise 5}
+\subsection{}
+If
+\[
+W(z,\bar z) = U(x.y) + iV(x,y),
+\]
+\begin{align*}
+  \frac{\pr^2 W}{\pr z\pr \bar z} &= \frac 1 2 (\frac{\pr}{\pr x} + i\frac{\pr}{\pr y}) (\frac 1 2 (\frac{\pr}{\pr x} - i\frac{\pr}{\pr y})(U + iV) )\\
+  &=\frac 1 4 (\frac{\pr}{\pr x} + i\frac{\pr}{\pr y})(\frac{\pr U}{\pr x} - i\frac{\pr U}{\pr y} + i\frac{\pr V}{\pr x} +\frac{\pr V}{\pr y})\\
+  &=\frac 1 4(\frac{\pr^2 U}{\pr x^2} + \frac{\pr^2 U}{\pr y^2} + i  \frac{\pr^2 V}{\pr x^2} + i \frac{\pr^2 V}{\pr y^2})\\
+  &=\frac 1 4 (\nabla^2 U + i\nabla^2 V).
+\end{align*}
+If $W$ is analytic, $\frac{\pr^2 W}{\pr z\pr \bar z}  =0$, so $U$ and $V$ are both harmonic.
+
+
+
+\subsection{}
+Let
+\[
+\phi(z) = f_1(x,y) + ig_1(x,y), 
+\]
+\[
+\varphi(z) = f_2(x,y) + ig_2(x,y), 
+\]
+we have
+\begin{align*}
+  W(z,\bar z) &= (x-iy)(f_1 + ig_1) +f_2 + ig_2\\
+  &= (xf_1 + yg_1 + f_2)+ i (yf_1 +xg_1 + g_2) \\
+  &:= f + ig.
+\end{align*}
+For the real part,
+\[
+f_{,xx} = 2f_{1,x} +xf_{1,xx}-yg_{1,xx} + f_{2,xx}
+\]
+\[
+f_{,yy} = 2g_{1,y} -yg_{1,yy}+xf_{1,yy} + f_{2,yy}
+\]
+\begin{align*}
+  f_{,xx} + f_{,yy} &=  2f_{1,x}+2g_{1,y} + x(f_{1,xx} + f_{1,yy}) - y(g_{,xx} + g_{1,yy} )+f_{2,xx} + f_{2,yy}\\
+  &= 2f_{1,x}+2g_{1,y} 
+\end{align*}
+\begin{align*}
+  \nabla^2 f &= 2(f_{1,xxx} + f_{1,xyy} + g_{1,yxx} + g_{1,yyy})\\
+  &=2(\frac{\pr}{\pr x}\nabla f_1 + \frac{\pr}{\pr y}\nabla g_1)\\
+  &=0
+\end{align*}
+so the real part is harmonic.
+
+
+For the imaginary part,
+\[
+g_{,xx} = 2g_{1,x} +xg_{1,xx}+yf_{1,xx} + g_{2,xx}
+\]
+\[
+g_{,yy} = 2f_{1,y} +yf_{1,yy}+xg_{1,yy} + g_{2,yy}
+\]
+\begin{align*}
+  g_{,xx} + g_{,yy} &=  2f_{1,y}+2g_{1,x} + x(g_{1,xx} + g_{1,yy}) + y(f_{1,xx} + f_{1,yy} )+g_{2,xx} + g_{2,yy}\\
+  &= 2f_{1,y}+2g_{1,x} 
+\end{align*}
+\begin{align*}
+  \nabla^2 g &= 2(f_{1,yxx} + f_{1,yyy} + g_{1,xxx} + g_{1,xyy})\\
+  &=2(\frac{\pr}{\pr y}\nabla f_1 + \frac{\pr}{\pr x}\nabla g_1)\\
+  &=0
+\end{align*}
+so the imaginary part is harmonic.
+
+\subsection{}
+$\sigma_{xx} + \sigma_{yy} = 4{\mathfrak R}(\phi')$:
+\[
+\Phi = xf_1 +yg_1 + f_2 
+\]
+\begin{align*}
+  \sigma_{xx} + \sigma_{yy} &= \frac{\pr ^2\Phi}{\pr y^2}+ \frac{\pr ^2\Phi}{\pr x^2}\\
+  &= 2(f_{1,x}+g_{1,y} )
+\end{align*}
+\[
+\phi' = f_{1,x} + ig_{1,x} = g_{1,y} - if_{1,y}
+\]
+\[
+\mathfrak R(\phi') = \frac 1 2 (f_{1,x} + g_{1,y})
+\]
+so
+\[
+\sigma_{xx} + \sigma_{yy} = 4{\mathfrak R}(\phi').
+\]
+$\sigma_{yy} - \sigma_{xx} + 2i\sigma_{xy} = 2(\bar z \phi''+\varphi'')$:
+\[
+  2i\sigma_{xy} = -2if_{,xy}=  -2i(f_{1,y}+g_{1,x} + xf_{1,xy} + yg_{1,xy} +f_{2,xy} )= -2i (xf_{1,xy} + yg_{1,xy} +f_{2,xy} )
+\]
+\begin{align*}
+  \sigma_{yy} - \sigma_{xx} &=  2(f_{1,x}-g_{1,y}) + x(f_{1,xx} - f_{1,yy}) + y(g_{1,xx} - g_{1,yy} )+ f_{2,xx} - f_{2,yy}\\
+  &= x(f_{1,xx} - f_{1,yy}) + y(g_{1,xx} - g_{1,yy} )+ f_{2,xx} - f_{2,yy}
+\end{align*}
+where the first term vanishes due to the Cauchy-Riemann condition. Collecting terms, we get
+\begin{align*}
+  \sigma_{yy} - \sigma_{xx} + 2i\sigma_{xy} &= (f_{2,xx} - f_{2,yy} -2if_{2,xy})\\
+  &+x(f_{1,xx} - f_{1,yy}-2if_{1,xy}) +y(g_{1,xx} - g_{1,yy} - 2ig_{1,xy})
+\end{align*}
+\[
+\varphi'' = f_{2,xx} + ig_{2,xx} = g_{2,yx} - if_{2,yx} =  g_{2,xy} - if_{2,xy} = -f_{2,yy} - ig_{2,yy}
+\]
+so
+\[
+2\varphi'' = (f_{2,xx} - f_{2,yy} -2if_{2,xy}).
+\]
+\begin{align*}
+  2\bar z \phi'' &=2 (x-iy)\phi''\\
+  &=2x\phi'' -2iy\phi''\\
+  &=x(f_{1,xx} - f_{1,yy}-2if_{1,xy}) -iy(ig_{1,xx} - ig_{1,yy} + 2g_{1,xy})\\
+  &=x(f_{1,xx} - f_{1,yy}-2if_{1,xy}) +y(g_{1,xx} - g_{1,yy} - 2ig_{1,xy})
+\end{align*}
+This means that 
+$$\sigma_{yy} - \sigma_{xx} + 2i\sigma_{xy} = 2(\bar z \phi''+\varphi'').$$
+
+\subsection{}
+A non-zero analytic function can only have at most countable number of zeros. $z\phi'' + \varphi'' = 0$ on $y=0$, so $z\phi'' + \varphi'' = 0$ on the entire domain. We can conclude that
+\[
+\varphi' = -z\phi' + \phi + A
+\]
+for some  $A$ and this holds for all $z$.
 
 
 
